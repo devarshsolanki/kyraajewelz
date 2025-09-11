@@ -1,0 +1,109 @@
+import { Authenticated, Unauthenticated, useQuery } from "convex/react";
+import { api } from "../convex/_generated/api";
+import { SignInForm } from "./SignInForm";
+import { SignOutButton } from "./SignOutButton";
+import { Toaster } from "sonner";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Shop from "./pages/Shop";
+import ProductDetail from "./pages/ProductDetail";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import Wishlist from "./pages/Wishlist";
+import Profile from "./pages/Profile";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import AdminDashboard from "./pages/AdminDashboard";
+import { CartProvider } from "./context/CartContext";
+import { WishlistProvider } from "./context/WishlistContext";
+import Footer from "./components/Footer";
+
+export default function App() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-rose-50 to-pink-50">
+      <Router>
+        <CartProvider>
+          <WishlistProvider>
+            <Content />
+          </WishlistProvider>
+        </CartProvider>
+      </Router>
+      <Toaster position="top-right" />
+    </div>
+  );
+}
+
+function Content() {
+  const loggedInUser = useQuery(api.auth.loggedInUser);
+
+  if (loggedInUser === undefined) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-gradient-to-r from-amber-400 to-rose-400 border-t-transparent"></div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <Navbar />
+      <main className="min-h-screen">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          
+          <Route path="/cart" element={
+            <Authenticated>
+              <Cart />
+            </Authenticated>
+          } />
+          
+          <Route path="/checkout" element={
+            <Authenticated>
+              <Checkout />
+            </Authenticated>
+          } />
+          
+          <Route path="/wishlist" element={
+            <Authenticated>
+              <Wishlist />
+            </Authenticated>
+          } />
+          
+          <Route path="/profile" element={
+            <Authenticated>
+              <Profile />
+            </Authenticated>
+          } />
+          
+          <Route path="/admin" element={
+            <Authenticated>
+              <AdminDashboard />
+            </Authenticated>
+          } />
+          
+          <Route path="/login" element={
+            <Unauthenticated>
+              <div className="min-h-screen flex items-center justify-center px-4">
+                <div className="max-w-md w-full">
+                  <div className="text-center mb-8">
+                    <h1 className="text-4xl font-bold bg-gradient-to-r from-amber-600 to-rose-600 bg-clip-text text-transparent mb-2">
+                      Welcome to Kyraa Jewelz
+                    </h1>
+                    <p className="text-gray-600">Sign in to continue your jewelry journey</p>
+                  </div>
+                  <SignInForm />
+                </div>
+              </div>
+            </Unauthenticated>
+          } />
+        </Routes>
+      </main>
+      <Footer />
+    </>
+  );
+}
