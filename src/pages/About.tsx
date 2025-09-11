@@ -8,7 +8,9 @@ import p3 from "../img/p3.jpg";
 import p4 from "../img/p4.webp";
 import p5 from "../img/p5.jpg";
 import v1 from "../img/v1.mp4";
-
+import v2 from "../img/v2.mp4";
+import v3 from "../img/v3.mp4";
+import v4 from "../img/v4.mp4";
 // Gallery images
 const galleryImages = [
   p1,
@@ -27,19 +29,19 @@ const instaReels = [
     price: "₹45,000",
   },
   {
-    video: "/videos/reel2.mp4",
+    video: v2,
     productName: "Luxury Necklace",
     productDesc: "Platinum and Sapphire",
     price: "₹75,000",
   },
   {
-    video: "/videos/reel3.mp4",
+    video: v3,
     productName: "Gold Bracelet",
     productDesc: "Handcrafted with love",
     price: "₹35,000",
   },
   {
-    video: "/videos/reel4.mp4",
+    video: v4,
     productName: "Diamond Earrings",
     productDesc: "Exquisite sparkle",
     price: "₹55,000",
