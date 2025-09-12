@@ -45,8 +45,8 @@ export default function Navbar() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
-        ? "bg-pink-200  backdrop-blur-md shadow-lg py-2" 
-        : "bg-pink-200 py-2"
+        ? "bg-pink-50  backdrop-blur-md shadow-lg py-2" 
+        : "bg-transparent shadow-none py-2"
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
@@ -55,7 +55,7 @@ export default function Navbar() {
             <div className="w-12 h-10  rounded-full flex items-center justify-center">
               <img src="/src/img/logo.png" alt="Kyraa Jewelz Logo" />
             </div>
-            <span className={`text-2xl font-bold bg-gradient-to-r from-amber-600 to-rose-600 bg-clip-text text-transparent ${
+            <span className={`text-lg md:text-2xl font-bold bg-gradient-to-r from-amber-600 to-rose-600 bg-clip-text text-transparent ${
               isScrolled ? "block" : "hidden sm:block"
             }`}>
               Kyraa Jewelz
@@ -73,7 +73,7 @@ export default function Navbar() {
                     ? "text-rose-600"
                     : isScrolled
                     ? "text-gray-700 hover:text-rose-600"
-                    : "text-gray-500 hover:text-rose-600"
+                    : "text-gray-400 hover:text-rose-600"
                 }`}
               >
                 {link.name}
@@ -101,7 +101,9 @@ export default function Navbar() {
               <>
                 {/* Wishlist */}
                 <Link to="/wishlist" className="relative p-2 hover:bg-gray-100 rounded-full transition-colors">
-                  <Heart className={`w-6 h-6 ${location.pathname === "/wishlist" ? "text-rose-600 fill-current" : "text-gray-700"}`} />
+                  <Heart className={`w-6 h-6 ${location.pathname === "/wishlist" ? "text-rose-600 fill-current" : isScrolled
+                    ? "text-gray-700 hover:text-rose-600"
+                    : "text-gray-400 hover:text-rose-600"}`} />
                   {wishlistCount > 0 && (
                     <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                       {wishlistCount}
@@ -111,7 +113,9 @@ export default function Navbar() {
 
                 {/* Cart */}
                 <Link to="/cart" className="relative p-2 hover:bg-gray-100 rounded-full transition-colors">
-                  <ShoppingBag className={`w-6 h-6 ${location.pathname === "/cart" ? "text-rose-600" : "text-gray-700"}`} />
+                  <ShoppingBag className={`w-6 h-6 ${location.pathname === "/cart" ? "text-rose-600" : isScrolled
+                    ? "text-gray-700"
+                    : "text-gray-400"}`} />
                   {cartCount > 0 && (
                     <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                       {cartCount}
@@ -122,7 +126,9 @@ export default function Navbar() {
                 {/* Profile Dropdown */}
                 <div className="relative group">
                   <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                    <User className="w-6 h-6 text-gray-700" />
+                    <User className={`w-6 h-6 ${isScrolled
+                    ? "text-gray-700"
+                    : "text-gray-400"}`} />
                   </button>
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                     <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">

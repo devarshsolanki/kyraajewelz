@@ -7,10 +7,7 @@ import p2 from "../img/p2.jpg";
 import p3 from "../img/p3.jpg";
 import p4 from "../img/p4.webp";
 import p5 from "../img/p5.jpg";
-import v1 from "../img/v1.mp4";
-import v2 from "../img/v2.mp4";
-import v3 from "../img/v3.mp4";
-import v4 from "../img/v4.mp4";
+
 // Gallery images
 const galleryImages = [
   p1,
@@ -23,25 +20,25 @@ const galleryImages = [
 // Instagram reels with video + product info
 const instaReels = [
   {
-    video: v1,
+    video: "https://res.cloudinary.com/dt3dtekuh/video/upload/v1757601682/trecyknhnjphmfruu7k5.mp4",
     productName: "Elegant Ring",
     productDesc: "18k Gold with Diamond",
     price: "₹45,000",
   },
   {
-    video: v2,
+    video: "https://res.cloudinary.com/dt3dtekuh/video/upload/v1757601705/ovfyzjc38gvua9vvqwpl.mp4",
     productName: "Luxury Necklace",
     productDesc: "Platinum and Sapphire",
     price: "₹75,000",
   },
   {
-    video: v3,
+    video: "https://res.cloudinary.com/dt3dtekuh/video/upload/v1757601729/vnxygntosyoithumehan.mp4",
     productName: "Gold Bracelet",
     productDesc: "Handcrafted with love",
     price: "₹35,000",
   },
   {
-    video: v4,
+    video: "https://res.cloudinary.com/dt3dtekuh/video/upload/v1757601770/j0vdfn3tz79qpzcxquuf.mp4",
     productName: "Diamond Earrings",
     productDesc: "Exquisite sparkle",
     price: "₹55,000",

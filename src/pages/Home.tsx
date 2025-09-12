@@ -1,16 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Link } from "react-router-dom";
-import { ArrowRight, Star, Heart } from "lucide-react";
+import { ArrowRight, Star, Heart, Volume2, VolumeX } from "lucide-react";
 import ProductCard from "../components/ProductCard";
-import v1 from "../img/v1.mp4";
-import v2 from "../img/v2.mp4";
-import v3 from "../img/v3.mp4";
-import v4 from "../img/v4.mp4";
-import n1 from "../img/Chain2.png"
-
-
 // Swiper imports
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Navigation } from "swiper/modules";
@@ -22,109 +15,107 @@ export default function Home() {
   const featuredProducts = useQuery(api.products.getFeaturedProducts);
   const categories = useQuery(api.categories.getCategories);
 
-  // Hero slider images
-  const sliderImages = [
-    // "https://png.pngtree.com/thumb_back/fh260/background/20230716/pngtree-luxurious-jewelry-package-3d-rendering-mockup-template-image_3886307.jpg",
-    // "https://t4.ftcdn.net/jpg/02/96/79/33/360_F_296793333_YLcoeUJZ1U3z0mRmChzptMYu3ivdsGYG.jpg",
-    // "https://res.cloudinary.com/dt3dtekuh/image/upload/v1757578945/x2rqrjskioosx2etgfiq.jpg",
-    // "https://res.cloudinary.com/dt3dtekuh/image/upload/v1757580062/cpmqe2kujx1dyeqmjgei.png",
-    n1,
-  ];
-
   // Instagram reels section (local videos)
   const instaReels = [
     {
-      video: v1,
-      productName: "Elegant Ring",
-      productDesc: "18k Gold with Diamond",
-      price: "₹45,000",
+      video: "https://res.cloudinary.com/dt3dtekuh/video/upload/v1757601682/trecyknhnjphmfruu7k5.mp4",
+      productName: "Where Style Meets Craft",
+      productDesc: "Exclusive with our influencer",
     },
     {
-      video: v2,
-      productName: "Luxury Necklace",
-      productDesc: "Platinum and Sapphire",
-      price: "₹75,000",
-    },
-    {
-      video: v3,
-      productName: "Gold Bracelet",
+      video: "https://res.cloudinary.com/dt3dtekuh/video/upload/v1757601705/ovfyzjc38gvua9vvqwpl.mp4",
+      productName: "Beautifully Packed",
       productDesc: "Handcrafted with love",
-      price: "₹35,000",
     },
     {
-      video: v4,
-      productName: "Diamond Earrings",
-      productDesc: "Exquisite sparkle",
-      price: "₹55,000",
+      video: "https://res.cloudinary.com/dt3dtekuh/video/upload/v1757601729/vnxygntosyoithumehan.mp4",
+      productName: "Timeless Shine",
+      productDesc: "Jewellery for every occasion",
+    },
+    {
+      video: "https://res.cloudinary.com/dt3dtekuh/video/upload/v1757601770/j0vdfn3tz79qpzcxquuf.mp4",
+      productName: "Classic Earrings",
+      productDesc: "Shine beyond trends",
     },
   ];
 
-  const [currentImage, setCurrentImage] = useState(0);
+  const [activeVideo, setActiveVideo] = useState<number | null>(null);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % sliderImages.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [sliderImages.length]);
+  const toggleSound = (idx: number) => {
+    videoRefs.current.forEach((video, i) => {
+      if (video) {
+        if (i === idx) {
+          const isMuted = video.muted;
+          video.muted = !isMuted;
+          setActiveVideo(!isMuted ? null : idx);
+        } else {
+          video.muted = true;
+        }
+      }
+    });
+  };
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[580px] mt-14 flex items-center justify-center overflow-hidden">
-        <Link
-          to="/shop"
-          className="absolute inset-0 transition-all duration-1000 cursor-pointer"
-          style={{
-            backgroundImage: `url(${sliderImages[currentImage]})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            zIndex: 0,
-          }}
-        />
+      <section className="relative h-[90vh] sm:h-screen flex items-center justify-center overflow-hidden">
+        <video
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src="https://cdn.pixabay.com/video/2019/10/09/27669-365224683_large.mp4" type="video/mp4" />
+        </video>
 
-        {/* <div className="relative z-30 text-center max-w-4xl mx-auto px-4">
-          <h1 className="text-6xl md:text-8xl font-bold mb-6">
+        {/* Overlay Link */}
+        <Link to="/shop" className="absolute inset-0 cursor-pointer z-10" />
+
+        <div className="relative z-30 text-center max-w-4xl mx-auto px-4">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 leading-tight">
             <span className="bg-gradient-to-r from-amber-600 via-rose-600 to-pink-600 bg-clip-text text-transparent">
               Kyraa Jewelz
             </span>
           </h1>
-          <p className="text-2xl md:text-3xl text-gray-600 mb-4 font-light">
+          <p className="text-lg sm:text-2xl md:text-3xl text-gray-100 mb-4 font-light">
             Elegance that Defines You
           </p>
-          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg text-gray-100 mb-8 max-w-2xl mx-auto">
             Discover our exquisite collection of handcrafted jewelry, where timeless elegance meets contemporary design.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/shop"
-              className="bg-gradient-to-r from-amber-500 to-rose-500 text-white px-8 py-4 rounded-full font-semibold text-lg hover:from-amber-600 hover:to-rose-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center group"
+              className="bg-gradient-to-r from-amber-500 to-rose-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:from-amber-600 hover:to-rose-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center group"
             >
               Shop Collection
-              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               to="/about"
-              className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-full font-semibold text-lg hover:border-rose-500 hover:text-rose-600 transition-all duration-300 transform hover:scale-105"
+              className="border-2 border-gray-300 text-gray-700 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:border-rose-500 hover:text-rose-600 transition-all duration-300 transform hover:scale-105"
             >
               Our Story
             </Link>
           </div>
-        </div> */}
+        </div>
       </section>
 
       {/* Categories Section */}
-      <section className="py-20 bg-white">
+      <section className="py-16 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
               Explore Our Collections
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-base sm:text-xl text-gray-600 max-w-2xl mx-auto">
               From timeless classics to contemporary designs, find the perfect piece for every occasion.
             </p>
           </div>
 
+          {/* Desktop Swiper */}
           <div className="hidden lg:block">
             <Swiper
               effect={"coverflow"}
@@ -138,18 +129,14 @@ export default function Home() {
                 stretch: -50,
                 depth: 250,
                 modifier: 1.5,
-               
-               slideShadows: true,
+                slideShadows: true,
               }}
               navigation
               modules={[EffectCoverflow, Navigation]}
               className="w-full"
             >
               {categories?.map((category) => (
-                <SwiperSlide
-                  key={category._id}
-                  className="!w-[310px] cursor-pointer"
-                >
+                <SwiperSlide key={category._id} className="!w-[280px] xl:!w-[310px] cursor-pointer">
                   <Link
                     to={`/shop?category=${category._id}`}
                     className="group relative block overflow-hidden rounded-2xl shadow-lg"
@@ -169,8 +156,8 @@ export default function Home() {
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
                       <div className="p-6 text-white">
-                        <h3 className="text-xl font-semibold mb-2">{category.name}</h3>
-                        <p className="text-sm opacity-90">{category.description}</p>
+                        <h3 className="text-lg xl:text-xl font-semibold mb-1">{category.name}</h3>
+                        <p className="text-xs sm:text-sm opacity-90">{category.description}</p>
                       </div>
                     </div>
                   </Link>
@@ -179,7 +166,8 @@ export default function Home() {
             </Swiper>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 lg:hidden">
+          {/* Mobile Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 lg:hidden">
             {categories?.map((category) => (
               <Link
                 key={category._id}
@@ -194,14 +182,14 @@ export default function Home() {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-2xl"
                     />
                   ) : (
-                    <div className="text-6xl text-amber-500">
-                      <Heart className="w-12 h-12" />
+                    <div className="text-amber-500">
+                      <Heart className="w-10 h-10 sm:w-12 sm:h-12" />
                     </div>
                   )}
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
-                  <div className="p-4 text-white">
-                    <h3 className="text-lg font-semibold">{category.name}</h3>
+                  <div className="p-3 sm:p-4 text-white">
+                    <h3 className="text-sm sm:text-lg font-semibold">{category.name}</h3>
                   </div>
                 </div>
               </Link>
@@ -211,40 +199,42 @@ export default function Home() {
       </section>
 
       {/* Featured Products */}
-      <section className="py-20 bg-gradient-to-br from-amber-50 to-rose-50">
+      <section className="py-16 sm:py-20 bg-gradient-to-br from-amber-50 to-rose-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Featured Collection</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Featured Collection</h2>
+            <p className="text-base sm:text-xl text-gray-600 max-w-2xl mx-auto">
               Handpicked pieces that showcase our finest craftsmanship and design excellence.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {featuredProducts?.slice(0, 8).map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}
           </div>
-          <div className="text-center mt-12">
+          <div className="text-center mt-10 sm:mt-12">
             <Link
               to="/shop"
-              className="inline-flex items-center bg-gradient-to-r from-amber-500 to-rose-500 text-white px-8 py-3 rounded-full font-semibold hover:from-amber-600 hover:to-rose-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
+              className="inline-flex items-center bg-gradient-to-r from-amber-500 to-rose-500 text-white px-6 sm:px-8 py-3 rounded-full font-semibold text-base sm:text-lg hover:from-amber-600 hover:to-rose-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
             >
               View All Products
-              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>
       </section>
 
       {/* Instagram Reels */}
-      <section className="py-16 bg-rose-50">
+      <section className="py-12 sm:py-16 bg-rose-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Instagram Reels</h2>
-          <p className="text-xl text-gray-600 mb-12">
-            Follow our journey and latest collections on Instagram
+          <h2 className="text-3xl sm:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+            Moments of Elegance
+          </h2>
+          <p className="text-base sm:text-2xl text-gray-600 mb-8 sm:mb-12">
+            Discover our timeless creations — beautifully captured in motion.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
             {instaReels.map((item, idx) => (
               <div
                 key={idx}
@@ -252,23 +242,41 @@ export default function Home() {
               >
                 {/* Video */}
                 <video
+                  ref={(el) => (videoRefs.current[idx] = el)}
                   src={item.video}
-                  className="w-full h-[450px] object-cover"
+                  className="w-full h-[400px] sm:h-[400px] md:h-[450px] object-cover"
                   autoPlay
                   loop
                   muted
                   playsInline
                 />
 
+                {/* Volume Button */}
+                <button
+                  onClick={() => toggleSound(idx)}
+                  className="absolute top-2 right-2 sm:top-3 sm:right-3 bg-black/60 hover:bg-black text-white p-1 sm:p-2 rounded-full"
+                >
+                  {activeVideo === idx ? (
+                    <Volume2 size={18} className="sm:w-5 sm:h-5" />
+                  ) : (
+                    <VolumeX size={18} className="sm:w-5 sm:h-5" />
+                  )}
+                </button>
+
                 {/* Product Overlay */}
-                <div className="absolute bottom-0 left-0 w-full bg-black/50 p-4 text-left  group-hover:opacity-100 transition-opacity duration-300">
-                  <h3 className="text-white font-semibold text-lg">{item.productName}</h3>
-                  <p className="text-white/90 text-sm">{item.productDesc}</p>
+                <div className="absolute bottom-0 left-0 w-full bg-black/50 p-3 sm:p-4 text-left group-hover:opacity-100 transition-opacity duration-300">
+                  <h3 className="text-white font-semibold text-sm sm:text-lg">
+                    {item.productName}
+                  </h3>
+                  <p className="text-white/90 text-xs sm:text-sm">{item.productDesc}</p>
 
-                  <Link to="/shop" className="text-amber-100 bg-amber-400 w-40 p-2 rounded-lg  font-bold mt-1 block">Shop now</Link>
+                  <Link
+                    to="/shop"
+                    className="inline-flex items-center text-white bg-gradient-to-r from-pink-600 via-rose-600 to-amber-600 px-3 sm:px-4 py-1.5 rounded-lg font-semibold text-xs sm:text-sm mt-2"
+                  >
+                    Shop now
+                  </Link>
                 </div>
-
-               
               </div>
             ))}
           </div>
@@ -276,15 +284,15 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-white">
+      <section className="py-16 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">What Our Customers Say</h2>
-            <p className="text-xl text-gray-600">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">What Our Customers Say</h2>
+            <p className="text-base sm:text-xl text-gray-600">
               Hear from those who have experienced the Kyraa Jewelz difference.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {[
               {
                 name: "Priya Sharma",
@@ -302,14 +310,19 @@ export default function Home() {
                 rating: 5,
               },
             ].map((testimonial, index) => (
-              <div key={index} className="bg-gradient-to-br from-amber-50 to-rose-50 p-8 rounded-2xl shadow-lg">
+              <div
+                key={index}
+                className="bg-gradient-to-br from-amber-50 to-rose-50 p-6 sm:p-8 rounded-2xl shadow-lg"
+              >
                 <div className="flex items-center mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-amber-400 fill-current" />
+                    <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 fill-current" />
                   ))}
                 </div>
-                <p className="text-gray-700 mb-6 italic">"{testimonial.text}"</p>
-                <div className="font-semibold text-gray-900">{testimonial.name}</div>
+                <p className="text-gray-700 mb-4 sm:mb-6 italic text-sm sm:text-base">
+                  "{testimonial.text}"
+                </p>
+                <div className="font-semibold text-gray-900 text-sm sm:text-base">{testimonial.name}</div>
               </div>
             ))}
           </div>
@@ -317,18 +330,20 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-amber-400 to-rose-600">
+      <section className="py-16 sm:py-20 bg-gradient-to-r from-amber-400 to-rose-600">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-white mb-6">Ready to Find Your Perfect Piece?</h2>
-          <p className="text-xl text-white/90 mb-8">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 sm:mb-6">
+            Ready to Find Your Perfect Piece?
+          </h2>
+          <p className="text-base sm:text-xl text-white/90 mb-6 sm:mb-8">
             Join thousands of satisfied customers who have found their perfect jewelry at Kyraa Jewelz.
           </p>
           <Link
             to="/shop"
-            className="inline-flex items-center bg-white text-rose-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
+            className="inline-flex items-center bg-white text-rose-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
           >
             Start Shopping
-            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
       </section>
