@@ -1,4 +1,4 @@
-import { Authenticated, Unauthenticated, useQuery } from "convex/react";
+import { Authenticated, Unauthenticated, useQuery, useConvexAuth } from "convex/react";
 import { api } from "../convex/_generated/api";
 import { SignInForm } from "./SignInForm";
 import { SignOutButton } from "./SignOutButton";
@@ -36,6 +36,9 @@ export default function App() {
 
 function Content() {
   const loggedInUser = useQuery(api.auth.loggedInUser);
+  const { isLoading, isAuthenticated } = useConvexAuth();
+  console.log("Content component - loggedInUser:", loggedInUser);
+  console.log("Content component - useConvexAuth: isLoading:", isLoading, "isAuthenticated:", isAuthenticated);
 
   if (loggedInUser === undefined) {
     return (
@@ -87,19 +90,21 @@ function Content() {
           } />
           
           <Route path="/login" element={
-            <Unauthenticated>
-              <div className="min-h-screen flex items-center justify-center px-4">
-                <div className="max-w-md w-full">
-                  <div className="text-center mb-8">
-                    <h1 className="text-4xl font-bold bg-gradient-to-r from-amber-600 to-rose-600 bg-clip-text text-transparent mb-2">
-                      Welcome to Kyraa Jewelz
-                    </h1>
-                    <p className="text-gray-600">Sign in to continue your jewelry journey</p>
-                  </div>
-                  <SignInForm />
-                </div>
-              </div>
-            </Unauthenticated>
+            <>
+              
+                {/* <div className="min-h-screen flex items-center justify-center  pt-10 md:pt-15">
+                  <div className=" w-full">
+                    <div className="text-center mb-5">
+                      <h1 className="text-4xl font-bold bg-gradient-to-r from-amber-600 to-rose-600 bg-clip-text text-transparent mb-2">
+                        Welcome to Kyraa Jewelz
+                      </h1>
+                      <p className="text-gray-600">Sign in to continue your jewelry journey</p>
+                    </div> */}
+                    <SignInForm />
+                  {/* </div>
+                </div> */}
+             
+            </>
           } />
         </Routes>
       </main>

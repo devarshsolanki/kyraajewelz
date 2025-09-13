@@ -96,7 +96,7 @@ export default function ProductDetail() {
 
   return (
     <>
-      <div classname="min-h-screen pt-20 bg-gradient-to-br from-amber-50 via-rose-50 to-pink-50">
+      <div className="min-h-screen pt-20 bg-gradient-to-br from-amber-50 via-rose-50 to-pink-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Breadcrumb */}
           <nav className="mb-8">

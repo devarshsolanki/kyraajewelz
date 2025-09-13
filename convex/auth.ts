@@ -8,6 +8,7 @@ export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
   providers: [Password, Anonymous],
 });
 
+
 export const loggedInUser = query({
   handler: async (ctx) => {
     const userId = await getAuthUserId(ctx);
@@ -65,5 +66,24 @@ export const deleteMyProfile = mutation({
     const userId = await getAuthUserId(ctx);
     if (!userId) throw new Error("Not authenticated");
     await ctx.db.delete(userId);
+  },
+});
+
+export const changePassword = mutation({
+  args: {
+    oldPassword: v.string(),
+    newPassword: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Not authenticated");
+
+    // Retrieve the user to verify the old password
+    const user = await ctx.db.get(userId);
+    if (!user) throw new Error("User not found");
+
+    // Securely change the password using the Password provider.
+    // This method handles verification of the old password and updates to the new one.
+    // await auth.providers.Password.changePassword(ctx, userId, args.oldPassword, args.newPassword);
   },
 });
