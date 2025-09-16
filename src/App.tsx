@@ -18,6 +18,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import { CartProvider } from "./context/CartContext";
 import { WishlistProvider } from "./context/WishlistContext";
 import Footer from "./components/Footer";
+import CustomLoader from "./components/CustomLoader";
 
 export default function App() {
   return (
@@ -41,11 +42,7 @@ function Content() {
   console.log("Content component - useConvexAuth: isLoading:", isLoading, "isAuthenticated:", isAuthenticated);
 
   if (loggedInUser === undefined) {
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-4 border-gradient-to-r from-amber-400 to-rose-400 border-t-transparent"></div>
-      </div>
-    );
+    return <CustomLoader />;
   }
 
   return (

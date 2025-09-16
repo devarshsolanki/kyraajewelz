@@ -67,7 +67,7 @@ export default function Shop() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className=" text-3xl md:text-4xl font-cinzel font-bold text-gray-900 mb-4">
+          <h1 className=" text-3xl md:text-4xl font-cinzel font-bold bg-gradient-to-r from-amber-600 via-rose-600 to-pink-600 bg-clip-text text-transparent mb-4">
             {searchQuery ? `Search Results for "${searchQuery}"` : "Shop Collection"}
           </h1>
           <p className="text-gray-600 font-lato">
