@@ -33,8 +33,8 @@ export default function Wishlist() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
             <Heart className="w-24 h-24 text-gray-300 mx-auto mb-6" />
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Your wishlist is empty</h2>
-            <p className="text-gray-600 mb-8">
+            <h2 className="text-3xl font-cinzel font-bold text-gray-900 mb-4">Your wishlist is empty</h2>
+            <p className="text-gray-600 mb-8 forn-lato">
               Save your favorite jewelry pieces to your wishlist for easy access later.
             </p>
             <Link
@@ -54,8 +54,8 @@ export default function Wishlist() {
     <div className="min-h-screen pt-20 bg-gradient-to-br from-amber-50 via-rose-50 to-pink-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">My Wishlist</h1>
-          <p className="text-gray-600">{wishlistItems.length} items saved</p>
+          <h1 className="text-3xl  font-cinzelfont-bold text-gray-900 mb-2">My Wishlist</h1>
+          <p className="text-gray-600 font-lato">{wishlistItems.length} items saved</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

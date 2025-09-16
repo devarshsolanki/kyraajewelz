@@ -68,7 +68,7 @@ export default function Checkout() {
     <div className="min-h-screen pt-20 bg-gradient-to-br from-amber-50 via-rose-50 to-pink-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Checkout</h1>
+          <h1 className="text-3xl font-bold font-cinzel text-gray-900 mb-2">Checkout</h1>
           <div className="flex items-center space-x-4">
             <div className={`flex items-center ${step >= 1 ? "text-rose-600" : "text-gray-400"}`}>
               <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
@@ -76,7 +76,7 @@ export default function Checkout() {
               }`}>
                 1
               </div>
-              <span className="ml-2 font-medium">Shipping</span>
+              <span className="ml-2 font-bold font-lato">Shipping</span>
             </div>
             <div className="w-8 h-px bg-gray-300"></div>
             <div className={`flex items-center ${step >= 2 ? "text-rose-600" : "text-gray-400"}`}>
@@ -85,7 +85,7 @@ export default function Checkout() {
               }`}>
                 2
               </div>
-              <span className="ml-2 font-medium">Payment</span>
+              <span className="ml-2 font-lato font-bold">Payment</span>
             </div>
           </div>
         </div>
@@ -95,10 +95,10 @@ export default function Checkout() {
           <div className="lg:col-span-2">
             {step === 1 && (
               <div className="bg-white rounded-2xl shadow-lg p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-6">Shipping Information</h2>
+                <h2 className="text-xl font-lato font-semibold text-gray-900 mb-6">Shipping Information</h2>
                 <form onSubmit={handleShippingSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-bold font-lato text-gray-700 mb-2">
                       Full Name
                     </label>
                     <input
@@ -111,7 +111,7 @@ export default function Checkout() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-bold font-lato text-gray-700 mb-2">
                       Address
                     </label>
                     <input
@@ -125,7 +125,7 @@ export default function Checkout() {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-bold font-lato text-gray-700 mb-2">
                         City
                       </label>
                       <input
@@ -137,7 +137,7 @@ export default function Checkout() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-bold font-lato text-gray-700 mb-2">
                         State
                       </label>
                       <input
@@ -152,7 +152,7 @@ export default function Checkout() {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-bold font-lato text-gray-700 mb-2">
                         ZIP Code
                       </label>
                       <input
@@ -164,7 +164,7 @@ export default function Checkout() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-bold font-lato text-gray-700 mb-2">
                         Phone
                       </label>
                       <input
@@ -254,7 +254,7 @@ export default function Checkout() {
           {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
-              <h3 className="text-xl font-semibold text-gray-900 mb-6">Order Summary</h3>
+              <h3 className="text-xl font-bold font-cinzel text-gray-900 mb-6">Order Summary</h3>
               
               <div className="space-y-4 mb-6">
                 {cartItems.map((item) => (

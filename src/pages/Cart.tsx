@@ -38,8 +38,8 @@ export default function Cart() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
             <ShoppingBag className="w-24 h-24 text-gray-300 mx-auto mb-6" />
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Your cart is empty</h2>
-            <p className="text-gray-600 mb-8">
+            <h2 className="text-3xl font-cinzel font-bold text-gray-900 mb-4">Your cart is empty</h2>
+            <p className="text-gray-600 mb-8 font-lato">
               Discover our beautiful jewelry collection and add some items to your cart.
             </p>
             <Link
@@ -59,8 +59,8 @@ export default function Cart() {
     <div className="min-h-screen pt-20 bg-gradient-to-br from-amber-50 via-rose-50 to-pink-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Shopping Cart</h1>
-          <p className="text-gray-600">{cartItems.length} items in your cart</p>
+          <h1 className="text-3xl font-bold font-cinzel  text-gray-900 mb-2">Shopping Cart</h1>
+          <p className="text-gray-600 font-lato">{cartItems.length} items in your cart</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -131,21 +131,21 @@ export default function Cart() {
           {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
-              <h3 className="text-xl font-semibold text-gray-900 mb-6">Order Summary</h3>
+              <h3 className="text-xl font-cinzel font-bold text-gray-900 mb-6">Order Summary</h3>
               
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Subtotal</span>
+                  <span className="text-gray-600 font-lato">Subtotal</span>
                   <span className="font-medium">₹{subtotal.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Shipping</span>
+                  <span className="text-gray-600 font-lato">Shipping</span>
                   <span className="font-medium">
                     {shipping === 0 ? "Free" : `₹${shipping.toLocaleString()}`}
                   </span>
                 </div>
                 {shipping === 0 && (
-                  <p className="text-sm text-green-600">
+                  <p className="text-sm text-green-600 font-lato">
                     🎉 You qualify for free shipping!
                   </p>
                 )}

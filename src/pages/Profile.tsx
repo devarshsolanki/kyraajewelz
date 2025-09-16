@@ -79,8 +79,8 @@ export default function Profile() {
     <div className="min-h-screen pt-20 bg-gradient-to-br from-amber-50 via-rose-50 to-pink-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">My Account</h1>
-          <p className="text-gray-600">Manage your profile and preferences</p>
+          <h1 className="text-3xl font-cinzel font-bold text-gray-900 mb-2">My Account</h1>
+          <p className="text-gray-600 font-lato">Manage your profile and preferences</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -91,7 +91,7 @@ export default function Profile() {
                 <div className="w-20 h-20 bg-gradient-to-r from-amber-400 to-rose-400 rounded-full flex items-center justify-center mx-auto mb-4">
                   <User className="w-10 h-10 text-white" />
                 </div>
-                <h3 className="font-semibold text-gray-900">{loggedInUser.name || "User"}</h3>
+                <h3 className="font-cizen text-gray-900">{loggedInUser.name || "User"}</h3>
                 <p className="text-sm text-gray-500">{loggedInUser.email}</p>
               </div>
 
@@ -122,7 +122,7 @@ export default function Profile() {
             <div className="bg-white rounded-2xl shadow-lg p-6">
               {activeTab === "profile" && (
                 <div>
-                  <h2 className="text-2xl font-semibold text-gray-900 mb-6">Profile Information</h2>
+                  <h2 className="text-2xl font-cizen text-gray-900 mb-6">Profile Information</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-4">
                       <div>
@@ -187,14 +187,14 @@ export default function Profile() {
                     {editMode ? (
                       <>
                         <button
-                          className="bg-gradient-to-r from-amber-500 to-rose-500 text-white px-6 py-2 rounded-lg font-semibold hover:from-amber-600 hover:to-rose-600 transition-all duration-300"
+                          className="bg-gradient-to-r from-amber-500 to-rose-500 text-white px-6 py-2 rounded-lg font-cizen hover:from-amber-600 hover:to-rose-600 transition-all duration-300"
                           onClick={handleSave}
                           type="button"
                         >
                           Save
                         </button>
                         <button
-                          className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:border-rose-500 hover:text-rose-600 transition-all duration-300"
+                          className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-cizen hover:border-rose-500 hover:text-rose-600 transition-all duration-300"
                           onClick={() => { setEditMode(false); setForm({ fullName: loggedInUser.name || "", phoneNumber: loggedInUser.phone || "" }); }}
                           type="button"
                         >
@@ -203,7 +203,7 @@ export default function Profile() {
                       </>
                     ) : (
                       <button
-                        className="bg-gradient-to-r from-amber-500 to-rose-500 text-white px-6 py-2 rounded-lg font-semibold hover:from-amber-600 hover:to-rose-600 transition-all duration-300"
+                        className="bg-gradient-to-r from-amber-500 to-rose-500 text-white px-6 py-2 rounded-lg font-cizen hover:from-amber-600 hover:to-rose-600 transition-all duration-300"
                         onClick={() => setEditMode(true)}
                         type="button"
                       >
@@ -216,11 +216,11 @@ export default function Profile() {
 
               {activeTab === "orders" && (
                 <div>
-                  <h2 className="text-2xl font-semibold text-gray-900 mb-6">Order History</h2>
+                  <h2 className="text-2xl font-cizen text-gray-900 mb-6">Order History</h2>
                   {userOrders.length === 0 ? (
                     <div className="text-center py-12">
                       <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No orders yet</h3>
+                      <h3 className="text-lg font-cizen text-gray-900 mb-2">No orders yet</h3>
                       <p className="text-gray-600">Your order history will appear here</p>
                     </div>
                   ) : (
@@ -229,7 +229,7 @@ export default function Profile() {
                         <div key={order._id} className="border rounded-lg p-4 shadow-sm bg-gray-50">
                           <div className="flex items-center justify-between mb-4">
                             <div>
-                              <h3 className="font-semibold text-gray-900">Order #{order.orderNumber}</h3>
+                              <h3 className="font-cizen text-gray-900">Order #{order.orderNumber}</h3>
                               <p className="text-sm text-gray-500">
                                 Placed on {new Date(order._creationTime).toLocaleDateString()}
                               </p>
@@ -267,11 +267,11 @@ export default function Profile() {
                               <MapPin className="w-4 h-4" />
                               <span>{order.shippingAddress.city}, {order.shippingAddress.state}</span>
                             </div>
-                            <p className="text-lg font-semibold">Total: ₹{order.totalAmount.toLocaleString()}</p>
+                            <p className="text-lg font-cizen">Total: ₹{order.totalAmount.toLocaleString()}</p>
                           </div>
 
                           <div className="flex items-center gap-2 mt-4">
-                            <span className={`px-2 py-1 rounded text-xs font-semibold ${getStatusColor(order.status)}`}>
+                            <span className={`px-2 py-1 rounded text-xs font-cizen ${getStatusColor(order.status)}`}>
                               {order.status}
                             </span>
                             {/* Show Cancel button only for eligible orders */}
@@ -284,7 +284,7 @@ export default function Profile() {
                               </button>
                             )}
                             {order.status === "cancelled" && (
-                              <span className="ml-4 text-red-500 font-semibold">Cancelled</span>
+                              <span className="ml-4 text-red-500 font-cizen">Cancelled</span>
                             )}
                           </div>
                         </div>
@@ -296,11 +296,11 @@ export default function Profile() {
 
               {activeTab === "wishlist" && (
                 <div>
-                  <h2 className="text-2xl font-semibold text-gray-900 mb-6">My Wishlist</h2>
+                  <h2 className="text-2xl font-cizen text-gray-900 mb-6">My Wishlist</h2>
                   {wishlistItems.length === 0 ? (
                     <div className="text-center py-12">
                       <Heart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No items in wishlist</h3>
+                      <h3 className="text-lg font-cizen text-gray-900 mb-2">No items in wishlist</h3>
                       <p className="text-gray-600">Save your favorite items to your wishlist</p>
                     </div>
                   ) : (
@@ -322,7 +322,7 @@ export default function Profile() {
                           </div>
                           <h4 className="font-medium text-gray-900 mb-1">{item.product.name}</h4>
                           <p className="text-sm text-gray-500 mb-2">{item.product.category}</p>
-                          <p className="font-semibold text-rose-600">₹{item.product.price.toLocaleString()}</p>
+                          <p className="font-cizen text-rose-600">₹{item.product.price.toLocaleString()}</p>
                         </div>
                       ))}
                     </div>
@@ -332,7 +332,7 @@ export default function Profile() {
 
               {activeTab === "settings" && (
                 <div>
-                  <h2 className="text-2xl font-semibold text-gray-900 mb-6">Account Settings</h2>
+                  <h2 className="text-2xl font-cizen text-gray-900 mb-6">Account Settings</h2>
                   <div className="space-y-6">
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                       <h3 className="font-medium text-blue-900 mb-2">Email Notifications</h3>
@@ -377,7 +377,7 @@ export default function Profile() {
       {cancelDialog.open && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-xs text-center">
-            <div className="mb-4 text-lg font-semibold text-gray-800">
+            <div className="mb-4 text-lg font-cizen text-gray-800">
               Are you sure you want to cancel this order?
             </div>
             <div className="flex justify-center gap-4">

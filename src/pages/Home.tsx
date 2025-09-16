@@ -75,7 +75,7 @@ export default function Home() {
 
         <div className="relative z-30 text-center max-w-4xl mx-auto px-4">
           <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 leading-tight">
-            <span className="bg-gradient-to-r from-amber-600 via-rose-600 to-pink-600 bg-clip-text text-transparent">
+            <span className=" font-playfair bg-gradient-to-r from-amber-600 via-rose-600 to-pink-600 bg-clip-text text-transparent">
               Kyraa Jewelz
             </span>
           </h1>
@@ -95,7 +95,7 @@ export default function Home() {
             </Link>
             <Link
               to="/about"
-              className="border-2 border-gray-300 text-gray-700 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:border-rose-500 hover:text-rose-600 transition-all duration-300 transform hover:scale-105"
+              className="border-2 border-gray-300 text-gray-100 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:border-rose-500 hover:text-rose-600 transition-all duration-300 transform hover:scale-105"
             >
               Our Story
             </Link>
@@ -107,10 +107,10 @@ export default function Home() {
       <section className="py-16 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl sm:text-4xl  font-cinzel font-bold text-gray-900 mb-4">
               Explore Our Collections
             </h2>
-            <p className="text-base sm:text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="font-lato sm:text-xl text-gray-600 max-w-2xl mx-auto">
               From timeless classics to contemporary designs, find the perfect piece for every occasion.
             </p>
           </div>
@@ -202,8 +202,8 @@ export default function Home() {
       <section className="py-16 sm:py-20 bg-gradient-to-br from-amber-50 to-rose-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Featured Collection</h2>
-            <p className="text-base sm:text-xl text-gray-600 max-w-2xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl  font-cinzel font-bold text-gray-900 mb-4">Featured Collection</h2>
+            <p className="font-lato sm:text-xl text-gray-600 max-w-2xl mx-auto">
               Handpicked pieces that showcase our finest craftsmanship and design excellence.
             </p>
           </div>
@@ -227,10 +227,10 @@ export default function Home() {
       {/* Instagram Reels */}
       <section className="py-12 sm:py-16 bg-rose-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+          <h2 className="text-3xl sm:text-5xl  font-cinzel font-bold text-gray-900 mb-4 sm:mb-6">
             Moments of Elegance
           </h2>
-          <p className="text-base sm:text-2xl text-gray-600 mb-8 sm:mb-12">
+          <p className="font-lato sm:text-2xl text-gray-600 mb-8 sm:mb-12">
             Discover our timeless creations — beautifully captured in motion.
           </p>
 
@@ -287,8 +287,8 @@ export default function Home() {
       <section className="py-16 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">What Our Customers Say</h2>
-            <p className="text-base sm:text-xl text-gray-600">
+            <h2 className="text-3xl sm:text-4xl font-cinzel font-bold text-gray-900 mb-4">What Our Customers Say</h2>
+            <p className="font-lato sm:text-xl text-gray-600">
               Hear from those who have experienced the Kyraa Jewelz difference.
             </p>
           </div>
@@ -332,7 +332,7 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-16 sm:py-20 bg-gradient-to-r from-amber-400 to-rose-600">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 sm:mb-6">
+          <h2 className="text-3xl sm:text-4xl font-playfair font-bold text-white mb-4 sm:mb-6">
             Ready to Find Your Perfect Piece?
           </h2>
           <p className="text-base sm:text-xl text-white/90 mb-6 sm:mb-8">

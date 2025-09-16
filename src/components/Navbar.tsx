@@ -18,6 +18,7 @@ export default function Navbar() {
   const loggedInUser = useQuery(api.auth.loggedInUser);
   const { cartCount } = useCart();
   const { wishlistCount } = useWishlist();
+  const logo = "https://res.cloudinary.com/dt3dtekuh/image/upload/v1757753682/ea8eveuwdys35qfmavkd.png"
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,7 +39,7 @@ export default function Navbar() {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Shop", path: "/shop" },
-    { name: "About", path: "/about" },
+    { name: "Gallery", path: "/about" },
     { name: "Contact", path: "/contact" },
   ];
 
@@ -53,11 +54,9 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-12 h-10  rounded-full flex items-center justify-center">
-              <img src="/src/img/logo.png" alt="Kyraa Jewelz Logo" />
+              <img src={logo} alt="Kyraa Jewelz Logo" />
             </div>
-            <span className={`text-lg md:text-2xl font-bold bg-gradient-to-r from-amber-600 to-rose-600 bg-clip-text text-transparent ${
-              isScrolled ? "block" : "hidden sm:block"
-            }`}>
+            <span className={`text-lg md:text-2xl font-bold font-playfair bg-gradient-to-r from-amber-600 to-rose-600 bg-clip-text text-transparent`}>
               Kyraa Jewelz
             </span>
           </Link>
@@ -68,7 +67,7 @@ export default function Navbar() {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`font-medium transition-colors duration-200 ${
+                className={` font-cinzel font-bold transition-colors duration-200 ${
                   location.pathname === link.path
                     ? "text-rose-600"
                     : isScrolled
@@ -96,7 +95,7 @@ export default function Navbar() {
           </form>
 
           {/* Right Side Icons */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center md:space-x-4 ">
             {loggedInUser ? (
               <>
                 {/* Wishlist */}
@@ -130,7 +129,7 @@ export default function Navbar() {
                     ? "text-gray-700"
                     : "text-gray-400"}`} />
                   </button>
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                  <div className="absolute right-0 mt-2 w-48 bg-pink-100 rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                     <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                       Profile
                     </Link>
@@ -160,9 +159,13 @@ export default function Navbar() {
               className="md:hidden p-2 hover:bg-gray-100 rounded-full transition-colors"
             >
               {isMobileMenuOpen ? (
-                <X className="w-6 h-6 text-gray-700" />
+                <X className={`w-6 h-6 ${isScrolled
+                    ? "text-gray-700"
+                    : "text-gray-400"}`} />
               ) : (
-                <Menu className="w-6 h-6 text-gray-700" />
+                <Menu className={`w-6 h-6 ${isScrolled
+                    ? "text-gray-700"
+                    : "text-gray-400"}`} />
               )}
             </button>
           </div>
@@ -170,7 +173,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t border-gray-200">
+          <div className="md:hidden mt-4 pb-4 border-t border-gray-200 bg-pink-100 rounded-b-lg shadow-lg">
             <div className="flex flex-col space-y-2 mt-4">
               {navLinks.map((link) => (
                 <Link

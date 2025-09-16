@@ -21,10 +21,10 @@ export function SignInForm() {
     <div className="flex flex-col items-center justify-center bg-pink-50 bg-opacity-50 min-h-screen">
       <div className="w-full mt-[80px]">
         <div className="text-center mb-5">
-          <h1 className="text-4xl font-bold p-1 bg-gradient-to-r from-amber-600 to-rose-600 bg-clip-text text-transparent mb-2">
+          <h1 className="text-5xl font-playfair p-2 bg-gradient-to-r from-amber-600 to-rose-600 bg-clip-text text-transparent mb-2">
             Welcome to Kyraa Jewelz
           </h1>
-          <p className="text-gray-600">Sign in to continue your jewelry journey</p>
+          {/* <p className="text-gray-600">Sign in to continue your jewelry journey</p> */}
         </div>
       </div>
 
@@ -32,7 +32,7 @@ export function SignInForm() {
       <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-xl mx-auto">
         {/* Header */}
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-2 text-gray-800">
-          {flow === "signIn" ? "Welcome Back 👋" : "✨ Create Account ✨"}
+          {flow === "signIn" ? "You're Back !" : "✨ Create Account ✨"}
         </h2>
         <p className="text-center text-gray-500 mb-8">
           {flow === "signIn"
@@ -79,7 +79,7 @@ export function SignInForm() {
 
             try {
               await signIn("password", formData);
-              navigate("/shop");
+              navigate("/");
             } catch (error: any) {
               if (error.message && error.message.includes("Invalid password")) {
                 setPasswordError("Invalid password. Please try again.");
@@ -208,10 +208,17 @@ export function SignInForm() {
         {/* Guest Sign-in */}
         <button
           className="w-full py-3 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-100 transition"
-          onClick={() => void signIn("anonymous")}
+          onClick={async () => {
+            try {
+              await signIn("anonymous"); // login as guest
+              navigate("/"); // redirect to home page
+            } catch (error) {
+              console.error("Guest login failed:", error);
+            }
+          }}
         >
           Continue as Guest
-        </button>
+</button>
       </div>
     </div>
   );

@@ -19,6 +19,7 @@
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
+    "types": ["framer-motion"],
 
     /* Import paths */
     "paths": {

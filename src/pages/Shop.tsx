@@ -67,10 +67,10 @@ export default function Shop() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className=" text-3xl md:text-4xl font-cinzel font-bold text-gray-900 mb-4">
             {searchQuery ? `Search Results for "${searchQuery}"` : "Shop Collection"}
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 font-lato">
             Discover our exquisite collection of handcrafted jewelry
           </p>
         </div>
@@ -151,17 +151,17 @@ export default function Shop() {
           <div className="flex-1">
             {/* Toolbar */}
             <div className="bg-white rounded-2xl shadow-lg p-4 mb-6">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
                   <button
                     onClick={() => setShowFilters(!showFilters)}
                     className="lg:hidden flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
                   >
                     <Filter className="w-4 h-4" />
-                    Filters
+                    
                   </button>
-                  
-                  <div className="text-sm text-gray-600">
+
+                  <div className="text-sm text-gray-600 hidden md:block">
                     {filteredAndSortedProducts.length} products found
                   </div>
                 </div>
@@ -180,7 +180,7 @@ export default function Shop() {
                   </select>
 
                   {/* View Mode */}
-                  <div className="flex items-center border border-gray-300 rounded-lg">
+                  <div className="lg:flex hidden items-center border border-gray-300 rounded-lg">
                     <button
                       onClick={() => setViewMode("grid")}
                       className={`p-2 ${viewMode === "grid" ? "bg-rose-500 text-white" : "text-gray-600 hover:bg-gray-50"}`}

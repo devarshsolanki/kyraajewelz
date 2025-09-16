@@ -70,9 +70,10 @@ export default function ProductCard({ product }: ProductCardProps) {
     }
   };
 
-  const discountPercentage = product.originalPrice 
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
-    : 0;
+  const discountPercentage =
+    product.originalPrice && product.originalPrice > product.price
+      ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+      : 0;
 
   return (
     <div 
@@ -101,7 +102,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
 
           {/* Discount Badge */}
-          {discountPercentage > 0 && (
+          {discountPercentage > 0&& (
             <div className="absolute top-4 left-4 bg-red-500 text-white px-2 py-1 rounded-full text-sm font-semibold">
               -{discountPercentage}%
             </div>
@@ -167,15 +168,15 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* Product Info */}
-        <div className="p-6">
+        <div className="p-4">
           <div className="text-sm text-gray-500 mb-1">{product.category}</div>
-          <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-rose-600 transition-colors">
+          <h3 className="font-semibold text-gray-900 mb-2 line-clamp-1 group-hover:text-rose-600 transition-colors">
             {product.name}
           </h3>
           
           {/* Rating */}
           <div className="flex items-center mb-3">
-            {[...Array(5)].map((_, i) => (
+            {[...Array(4)].map((_, i) => (
               <Star key={i} className="w-4 h-4 text-amber-400 fill-current" />
             ))}
             <span className="text-sm text-gray-500 ml-2">(4.8)</span>
@@ -202,6 +203,19 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
       </Link>
+     <div className="flex justify-center mb-3 px-4">
+  {product.stock > 0 && (
+    <button
+      onClick={handleAddToCart}
+      className="w-full sm:w-auto px-12 py-3 font-lato rounded-lg bg-rose-500 text-white 
+                 hover:bg-rose-600 hover:text-white transition-all duration-200 
+                 max-w-sm"
+    >
+      Add to Cart
+    </button>
+  )}
+</div>
+
     </div>
   );
 }

@@ -36,11 +36,11 @@ export default function Contact() {
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-amber-600 to-rose-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r font-cinzel font-bold from-amber-600 to-rose-600 bg-clip-text text-transparent">
               Get in Touch
             </span>
           </h1>
-          <p className="text-xl text-gray-700">
+          <p className="text-xl text-gray-700 font-lato ">
             We'd love to hear from you. Send us a message and we'll respond as soon as possible.
           </p>
         </div>
@@ -51,7 +51,7 @@ export default function Contact() {
           {/* Contact Information */}
           <div className="lg:col-span-1 space-y-6">
             <div className="bg-white rounded-2xl shadow-lg p-6">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-6">Contact Information</h2>
+              <h2 className="text-2xl font-cinzel font-bold text-gray-900 mb-6">Contact Information</h2>
               
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
@@ -59,8 +59,8 @@ export default function Contact() {
                     <MapPin className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Address</h3>
-                    <p className="text-gray-600">
+                    <h3 className="font-cinzel font-bold text-gray-900 mb-1">Address</h3>
+                    <p className="text-gray-600 font-lato">
                       123 Jewelry Street<br />
                       Mumbai, Maharashtra 400001<br />
                       India
@@ -68,13 +68,13 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 hover:bg-[#ebe2e2] transition-transform duration-800 p-2 rounded-lg " onClick={() => window.location.href = 'tel:+91 90843 23330'} >
+                <div className="flex items-start gap-4 hover:bg-[#ebe2e2] transition-transform duration-800  rounded-lg " onClick={() => window.location.href = 'tel:+91 90843 23330'} >
                   <div className="w-12 h-12 bg-gradient-to-r from-amber-400 to-rose-400 rounded-full flex items-center justify-center flex-shrink-0">
                     <Phone className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Phone</h3>
-                    <p className="text-gray-600">+91 90843 23330</p>
+                    <h3 className="font-cinzel font-bold text-gray-900 mb-1">Phone</h3>
+                    <p className="text-gray-600 font-lato">+91 90843 23330</p>
                    
                   </div>
                 </div>
@@ -84,9 +84,9 @@ export default function Contact() {
                     <Mail className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
-                    <p className="text-gray-600">info@kyraajewelz.com</p>
-                    <p className="text-gray-600">support@kyraajewelz.com</p>
+                    <h3 className=" text-gray-900 mb-1 font-cinzel font-bold">Email</h3>
+                    <p className="text-gray-600 font-lato">info@kyraajewelz.com</p>
+                    <p className="text-gray-600 font-lato">support@kyraajewelz.com</p>
                   </div>
                 </div>
 
@@ -96,8 +96,8 @@ export default function Contact() {
 
             {/* Quick Contact */}
             <div className="bg-gradient-to-r from-amber-500 to-rose-500 rounded-2xl shadow-lg p-6 text-white">
-              <h3 className="text-xl font-semibold mb-4">Need Immediate Help?</h3>
-              <p className="mb-4">
+              <h3 className="text-xl font-cinzel font-bold mb-4">Need Immediate Help?</h3>
+              <p className="mb-4 font-lato">
                 For urgent inquiries or immediate assistance, feel free to call us directly.
               </p>
               <div className="flex gap-3">
@@ -116,12 +116,12 @@ export default function Contact() {
           {/* Contact Form */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-6">Send us a Message</h2>
+              <h2 className="text-2xl font-cinzel font-bold text-gray-900 mb-6">Send us a Message</h2>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="name" className="block text-sm font-lato text-gray-700 mb-2">
                       Full Name *
                     </label>
                     <input
@@ -137,7 +137,7 @@ export default function Contact() {
                   </div>
                   
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="email" className="block text-sm font-lato text-gray-700 mb-2">
                       Email Address *
                     </label>
                     <input
@@ -154,7 +154,7 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="subject" className="block text-sm font-lato text-gray-700 mb-2">
                     Subject *
                   </label>
                   <input
@@ -170,7 +170,7 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="message" className="block text-sm font-lato text-gray-700 mb-2">
                     Message *
                   </label>
                   <textarea
@@ -210,7 +210,7 @@ export default function Contact() {
         {/* FAQ Section */}
         <div className="mt-16">
           <div className="bg-white rounded-2xl shadow-lg p-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
+            <h2 className="text-2xl font-cinzel font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {[
@@ -232,8 +232,8 @@ export default function Contact() {
                 }
               ].map((faq, index) => (
                 <div key={index} className="border-l-4 border-rose-500 pl-4">
-                  <h3 className="font-semibold text-gray-900 mb-2">{faq.question}</h3>
-                  <p className="text-gray-600">{faq.answer}</p>
+                  <h3 className="font-lato font-bold text-gray-900 mb-2">{faq.question}</h3>
+                  <p className="font-lato text-gray-600">{faq.answer}</p>
                 </div>
               ))}
             </div>

@@ -7,10 +7,10 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Brand & Description */}
         <div>
-          <Link to="/" className="text-2xl font-bold text-rose-600 tracking-tight mb-2 block">
+          <Link to="/" className="text-2xl font-playfair font-bold text-rose-600 tracking-tight mb-2 block">
             Kyraa Jewelz
           </Link>
-          <p className="text-gray-600 mb-4">
+          <p className="text-gray-600 font-lato mb-4">
             Luxury jewelry for every occasion. Discover handcrafted pieces that shine as bright as you do.
           </p>
           <div className="flex gap-3 mt-2">
@@ -33,74 +33,72 @@ export default function Footer() {
         </div>
         {/* Quick Links */}
         <div>
-          <h4 className="text-lg font-semibold text-gray-900 mb-3">Quick Links</h4>
+          <h4 className="text-lg font-cinzel font-bold text-gray-900 mb-3">Quick Links</h4>
           <ul className="space-y-2 text-gray-700">
             <li>
-              <Link to="/" className="hover:text-rose-600 transition">Home</Link>
+              <Link to="/" className="hover:text-rose-600 font-lato transition">Home</Link>
             </li>
             <li>
-              <Link to="/shop" className="hover:text-rose-600 transition">Shop</Link>
+              <Link to="/shop" className="hover:text-rose-600 font-lato transition">Shop</Link>
             </li>
             <li>
-              <Link to="/wishlist" className="hover:text-rose-600 transition">Wishlist</Link>
+              <Link to="/wishlist" className="hover:text-rose-600 font-lato transition">Wishlist</Link>
             </li>
             <li>
-              <Link to="/cart" className="hover:text-rose-600 transition">Cart</Link>
+              <Link to="/cart" className="hover:text-rose-600 font-lato transition">Cart</Link>
             </li>
             <li>
-              <Link to="/profile" className="hover:text-rose-600 transition">Profile</Link>
+              <Link to="/profile" className="hover:text-rose-600 font-lato transition">Profile</Link>
             </li>
             <li>
-              <Link to="/contact" className="hover:text-rose-600 transition">Contact</Link>
+              <Link to="/contact" className="hover:text-rose-600 font-lato transition">Contact</Link>
             </li>
           </ul>
         </div>
         {/* Customer Service */}
         <div>
-          <h4 className="text-lg font-semibold text-gray-900 mb-3">Customer Service</h4>
+          <h4 className="text-lg font-cinzel font-bold text-gray-900 mb-3">Customer Service</h4>
           <ul className="space-y-2 text-gray-700">
             <li>
-              <Link to="/faq" className="hover:text-rose-600 transition">FAQ</Link>
+              <Link to="/faq" className="hover:text-rose-600 font-lato transition">FAQ</Link>
             </li>
             <li>
-              <Link to="/returns" className="hover:text-rose-600 transition">Returns & Exchanges</Link>
+              <Link to="/returns" className="hover:text-rose-600 font-lato transition">Returns & Exchanges</Link>
             </li>
             <li>
-              <Link to="/shipping" className="hover:text-rose-600 transition">Shipping Info</Link>
+              <Link to="/shipping" className="hover:text-rose-600 font-lato transition">Shipping Info</Link>
             </li>
             <li>
-              <Link to="/privacy" className="hover:text-rose-600 transition">Privacy Policy</Link>
+              <Link to="/privacy" className="hover:text-rose-600 font-lato transition">Privacy Policy</Link>
             </li>
             <li>
-              <Link to="/terms" className="hover:text-rose-600 transition">Terms of Service</Link>
+              <Link to="/terms" className="hover:text-rose-600 font-lato transition">Terms of Service</Link>
             </li>
           </ul>
         </div>
         {/* Contact Info */}
         <div>
-          <h4 className="text-lg font-semibold text-gray-900 mb-3">Contact Us</h4>
+          <h4 className="text-lg font-cinzel font-bold text-gray-900 mb-3">Contact Us</h4>
           <ul className="space-y-2 text-gray-700">
             <li className="flex items-center gap-2">
               <Phone className="w-4 h-4 text-rose-600" />
-              <span>+91 99999 99999</span>
+              <span className="font-lato">+91 90843 23330</span>
             </li>
             <li className="flex items-center gap-2">
               <Mail className="w-4 h-4 text-amber-600" />
-              <span>support@kyraajewelz.com</span>
+              <span className="font-lato">support@kyraajewelz.com</span>
             </li>
             <li className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-pink-600" />
-              <span>Mumbai, India</span>
+              <span className="font-lato">Mumbai, India</span>
             </li>
           </ul>
-          <div className="mt-4 text-xs text-gray-500">
-            <span className="block">Mon - Sat: 10:00am - 7:00pm</span>
-            <span className="block">Sun: Closed</span>
-          </div>
+         
         </div>
       </div>
       <div className="mt-10 border-t border-rose-200 pt-4 text-center text-sm text-gray-500">
-        © {new Date().getFullYear()} Kyraa Jewelz. All rights reserved. | Designed with <span className="text-rose-500">♥</span> in India.
+        © {new Date().getFullYear()} Kyraa Jewelz. All rights reserved. | Designed & developed by
+        <Link className="text-rose-500" to="https://codexdigital.ltd"> CodexDigital</Link>
       </div>
     </footer>
   );

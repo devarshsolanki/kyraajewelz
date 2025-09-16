@@ -7,8 +7,11 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["Inter var", ...fontFamily.sans],
-        cursive: ["Cedarville Cursive", "cursive"],
+        playfair: ["Playfair Display", "serif"],
+        cinzel: ["Cinzel", "serif"],
+        lato: ["Lato", "sans-serif"],
       },
+      
       borderRadius: {
         DEFAULT: "8px",
         secondary: "4px",

@@ -1,99 +1,108 @@
-import { Crown, Heart, Award, Users, Import } from "lucide-react";
-import Lightbox from "yet-another-react-lightbox";
-import "yet-another-react-lightbox/styles.css";
-import { useState } from "react";
-import p1 from "../img/p1.jpg";
-import p2 from "../img/p2.jpg";
-import p3 from "../img/p3.jpg";
-import p4 from "../img/p4.webp";
-import p5 from "../img/p5.jpg";
+import React from "react";
+import { Link } from "react-router-dom";
 
-// Gallery images
-const galleryImages = [
-  p1,
-  p2,
-  p3,
-  p4,
-  p5,
-];
-
-// Instagram reels with video + product info
-const instaReels = [
-  {
-    video: "https://res.cloudinary.com/dt3dtekuh/video/upload/v1757601682/trecyknhnjphmfruu7k5.mp4",
-    productName: "Elegant Ring",
-    productDesc: "18k Gold with Diamond",
-    price: "₹45,000",
-  },
-  {
-    video: "https://res.cloudinary.com/dt3dtekuh/video/upload/v1757601705/ovfyzjc38gvua9vvqwpl.mp4",
-    productName: "Luxury Necklace",
-    productDesc: "Platinum and Sapphire",
-    price: "₹75,000",
-  },
-  {
-    video: "https://res.cloudinary.com/dt3dtekuh/video/upload/v1757601729/vnxygntosyoithumehan.mp4",
-    productName: "Gold Bracelet",
-    productDesc: "Handcrafted with love",
-    price: "₹35,000",
-  },
-  {
-    video: "https://res.cloudinary.com/dt3dtekuh/video/upload/v1757601770/j0vdfn3tz79qpzcxquuf.mp4",
-    productName: "Diamond Earrings",
-    productDesc: "Exquisite sparkle",
-    price: "₹55,000",
-  },
-];
-
-// Featured products
-const productImages = [
-  p1,
-  p2,
-  p3,
-  p4,
-  p5,
-  p2,
-  p3,
-  p4,
-  
-];
-
-export default function About() {
-  const [open, setOpen] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
+const About: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-rose-50 to-pink-50">
-
-      {/* Hero / Gallery Section */}
-      <section className="py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Crown className="w-16 h-16 text-amber-500 mx-auto mb-6" />
-          <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-amber-600 to-rose-600 bg-clip-text text-transparent">
-            Our Story in Pictures
-          </h1>
-          <p className="text-xl text-gray-700 mb-12">
-            Discover the beauty and craftsmanship behind every piece of Kyraa Jewelz through our visual journey.
+    <div className="bg-white text-gray-800">
+      {/* Hero Section */}
+      <section className="relative w-full h-[75vh] flex items-center justify-center bg-gray-100">
+        <img
+          src="https://i.pinimg.com/736x/ff/9c/20/ff9c204f62b65141a988cde3c7b1484f.jpg"
+          alt="Jewelry Hero"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="relative z-10 text-center text-white bg-black/50 p-6 rounded-xl">
+          <h1 className="text-4xl md:text-6xl font-bold font-cinzel mb-4">Moments of Elegance</h1>
+          <p className="mt-4 text-lg md:text-xl font-lato">
+            Discover timeless jewelry for every occasion
           </p>
+        </div>
+      </section>
 
-          {/* Photo Gallery */}
+      {/* Occasion-Based Inspirations */}
+     <section className="max-w-7xl mx-auto px-4 py-16 space-y-20">
+  {[
+    {
+      title: "Bridal Elegance",
+      desc: "Celebrate your big day with handcrafted bridal jewelry that shines forever.",
+      img: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1600&q=80",
+    },
+    {
+      title: "Festive Sparkle",
+      desc: "Adorn yourself with vibrant designs for festivals and celebrations.",
+      img: "https://res.cloudinary.com/dt3dtekuh/image/upload/v1757668884/g6bixmdidkzxypverzzh.jpg",
+    },
+    {
+      title: "Everyday Glam",
+      desc: "Delicate pieces that make every day special.",
+      img: "https://www.shutterstock.com/image-photo/womans-hands-close-wearing-rings-260nw-2320119159.jpg",
+    },
+    {
+      title: "Luxury Collection",
+      desc: "Exclusive statement jewelry for unforgettable moments.",
+      img: "https://t4.ftcdn.net/jpg/06/29/68/09/360_F_629680959_WtOjol2S8Zsyisqtx5lFgF3YWaNbEdv7.jpg",
+    },
+  ].map((item, idx) => (
+    <div
+      key={idx}
+      className="grid md:grid-cols-2 gap-8 items-center"
+    >
+      {/* Image */}
+      <div className={`${idx % 2 !== 0 ? "md:col-start-2" : ""}`}>
+        <img
+          src={item.img}
+          alt={item.title}
+          className="rounded-2xl shadow-lg w-full h-[400px] object-cover"
+        />
+      </div>
+
+      {/* Text */}
+      <div className={`space-y-4 ${idx % 2 !== 0 ? "md:col-start-1 md:row-start-1" : ""}`}>
+        <h2 className="text-3xl font-bold font-cinzel">{item.title}</h2>
+        <p className="text-gray-600">{item.desc}</p>
+        <Link
+          to="/shop"
+          className="inline-block mt-4 px-6 py-3 rounded-full bg-black text-white hover:bg-gray-800 transition"
+        >
+          Shop This Look
+        </Link>
+      </div>
+    </div>
+  ))}
+</section>
+
+
+      {/* Lifestyle Gallery */}
+      <section className="bg-gray-50 py-16">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">
+            Style Inspirations
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {galleryImages.map((img, idx) => (
+            {[
+              "https://t4.ftcdn.net/jpg/12/45/37/95/360_F_1245379563_D5Y90qSfUHN8mg0xVnjG922A0zmO2J3O.jpg",
+              "https://t4.ftcdn.net/jpg/05/84/41/65/360_F_584416508_eDB9BQA99eNiJg7YOE63WY8tV57jiPI6.jpg",
+              "https://www.theshoppingtree.in/cdn/shop/files/IMG_9838.jpg?v=1752582566&width=1946",
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS82vtgyBDLwHmNSgYu8_TPQSgyh73iQzXOJg&s",
+              "https://m.media-amazon.com/images/I/61pAR0CvgHL._UF1000,1000_QL80_.jpg",
+              "https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Sites-Tanishq-product-catalog/default/dw3e366e36/images/hi-res/51D3B2BBVAA00_1.jpg?sw=480&sh=480",
+            ].map((img, idx) => (
               <div
                 key={idx}
-                className="relative cursor-pointer overflow-hidden rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
-                onClick={() => {
-                  setCurrentIndex(idx);
-                  setOpen(true);
-                }}
+                className="relative group rounded-xl overflow-hidden shadow-lg"
               >
                 <img
                   src={img}
-                  alt={`Gallery ${idx + 1}`}
-                  className="w-full h-64 object-cover"
+                  alt={`Look ${idx + 1}`}
+                  className="w-full h-72 object-cover transform group-hover:scale-110 transition"
                 />
-                <div className="absolute inset-0 bg-black/20 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-lg font-semibold">
-                  View
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition">
+                  <Link
+                    to="/shop"
+                    className="px-4 py-2 bg-white text-black font-medium rounded-full"
+                  >
+                    Shop Now
+                  </Link>
                 </div>
               </div>
             ))}
@@ -101,127 +110,23 @@ export default function About() {
         </div>
       </section>
 
-      {/* Lightbox */}
-      {open && (
-        <Lightbox
-          open={open}
-          close={() => setOpen(false)}
-          slides={galleryImages.map((src) => ({ src }))}
-          index={currentIndex}
-        />
-      )}
-
-      {/* Values Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Why Choose Us</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
-            {[
-              {
-                icon: Award,
-                title: "Quality Excellence",
-                desc: "Only the finest materials and craftsmanship go into every piece."
-              },
-              {
-                icon: Heart,
-                title: "Passionate Craftsmanship",
-                desc: "Every jewelry piece is designed with love and attention to detail."
-              },
-              {
-                icon: Users,
-                title: "Customer First",
-                desc: "Your satisfaction is our top priority."
-              },
-            ].map((item, idx) => {
-              const Icon = item.icon;
-              return (
-                <div key={idx} className="p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
-                  <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-r from-amber-400 to-rose-400 rounded-full">
-                    <Icon className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                  <p className="text-gray-600">{item.desc}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Instagram Reels Section */}
-      <section className="py-16 bg-rose-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Instagram Reels</h2>
-          <p className="text-xl text-gray-600 mb-12">Follow our journey and latest collections on Instagram</p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {instaReels.map((item, idx) => (
-              <div
-                key={idx}
-                className="relative overflow-hidden rounded-xl  group shadow-2xl  duration-300"
-              >
-                {/* Video Reel */}
-                <video
-                  src={item.video}
-                  className="w-full h-[450px] object-cover"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                ></video>
-
-                {/* Product Card Overlay */}
-                <div className="absolute bottom-0 left-0 w-full bg-black/50 p-4 text-left  group-hover:opacity-100 transition-opacity duration-300">
-                  <h3 className="text-white font-semibold text-lg">{item.productName}</h3>
-                  <p className="text-white/90 text-sm">{item.productDesc}</p>
-                  <span className="text-amber-400 font-bold mt-1 block">{item.price}</span>
-                </div>
-
-                {/* Play Overlay Icon */}
-               
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Products Section below Reels */}
-      <section className="py-16 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Featured Products</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {productImages.map((img, idx) => (
-              <div key={idx} className="rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
-                <img src={img} alt={`Product ${idx + 1}`} className="w-full h-64 object-cover" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Modern CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-amber-600 to-rose-600">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-white mb-6">Explore Jewelry That Tells Your Story</h2>
-          <p className="text-xl text-white/90 mb-8">
-            Browse our curated collection and find the perfect piece to celebrate your moments.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/shop"
-              className="bg-white text-rose-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-            >
-              Shop Collection
-            </a>
-            <a
-              href="/contact"
-              className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-rose-600 transition-all duration-300 transform hover:scale-105"
-            >
-              Contact Us
-            </a>
-          </div>
-        </div>
+      {/* CTA Section */}
+      <section className="bg-gradient-to-r from-amber-400 to-rose-400 text-white py-16 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold">
+          Find Your Perfect Piece
+        </h2>
+        <p className="mt-4 text-lg text-gray-50">
+          Explore our full collection of handcrafted jewelry today.
+        </p>
+        <Link
+          to="/shop"
+          className="inline-block mt-6 px-8 py-3 rounded-full bg-white text-black hover:bg-gray-200 transition"
+        >
+          Shop the Collection
+        </Link>
       </section>
     </div>
   );
-}
+};
+
+export default About;
