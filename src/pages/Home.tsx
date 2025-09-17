@@ -6,6 +6,7 @@ import { ArrowRight, Star, Heart, Volume2, VolumeX } from "lucide-react";
 import ProductCard from "../components/ProductCard";
 // Swiper imports
 import { Swiper, SwiperSlide } from "swiper/react";
+import { motion } from "framer-motion";
 import { EffectCoverflow, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -56,8 +57,31 @@ export default function Home() {
     });
   };
 
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
+  const staggeredContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15 },
+    },
+  };
+
+  const pageVariants = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1, transition: { duration: 0.5 } },
+    exit: { opacity: 0, transition: { duration: 0.3 } },
+  };
+
   return (
-    <div className="min-h-screen">
+    <motion.div className="min-h-screen" variants={pageVariants} initial="initial" animate="animate" exit="exit">
       {/* Hero Section */}
       <section className="relative h-[90vh] sm:h-screen flex items-center justify-center overflow-hidden">
         <video
@@ -73,19 +97,39 @@ export default function Home() {
         {/* Overlay Link */}
         <Link to="/shop" className="absolute inset-0 cursor-pointer z-10" />
 
-        <div className="relative z-30 text-center max-w-4xl mx-auto px-4">
-          <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 leading-tight">
+        <motion.div
+          className="relative z-30 text-center max-w-4xl mx-auto px-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+        >
+          <motion.h1
+            className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 leading-tight"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
             <span className=" font-playfair bg-gradient-to-r from-amber-600 via-rose-600 to-pink-600 bg-clip-text text-transparent">
               Kyraa Jewelz
             </span>
-          </h1>
-          <p className="text-lg sm:text-2xl md:text-3xl text-gray-100 mb-4 font-light">
+          </motion.h1>
+          <motion.p
+            className="text-lg sm:text-2xl md:text-3xl text-gray-100 mb-4 font-light"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
             Elegance that Defines You
-          </p>
-          <p className="text-sm sm:text-base md:text-lg text-gray-100 mb-8 max-w-2xl mx-auto">
+          </motion.p>
+          <motion.p
+            className="text-sm sm:text-base md:text-lg text-gray-100 mb-8 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
             Discover our exquisite collection of handcrafted jewelry, where timeless elegance meets contemporary design.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          </motion.p>
+          <motion.div className="flex flex-col sm:flex-row gap-4 justify-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 1.0 }}>
             <Link
               to="/shop"
               className="bg-gradient-to-r from-amber-500 to-rose-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:from-amber-600 hover:to-rose-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center group"
@@ -99,12 +143,18 @@ export default function Home() {
             >
               Our Story
             </Link>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Categories Section */}
-      <section className="py-16 sm:py-20 bg-white">
+      <motion.section
+        className="py-16 sm:py-20 bg-white"
+        variants={staggeredContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ amount: 0.2 }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 sm:mb-16">
             <h2 className="text-3xl sm:text-4xl  font-cinzel font-bold text-gray-900 mb-4">
@@ -167,39 +217,52 @@ export default function Home() {
           </div>
 
           {/* Mobile Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 lg:hidden">
+          <motion.div
+            className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 lg:hidden"
+            variants={staggeredContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ amount: 0.2 }}
+          >
             {categories?.map((category) => (
-              <Link
+              <motion.div
                 key={category._id}
-                to={`/shop?category=${category._id}`}
-                className="group relative block overflow-hidden rounded-2xl shadow-lg"
+                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               >
-                <div className="aspect-square w-full flex items-center justify-center">
-                  {category.image ? (
-                    <img
-                      src={category.image}
-                      alt={category.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-2xl"
-                    />
-                  ) : (
-                    <div className="text-amber-500">
-                      <Heart className="w-10 h-10 sm:w-12 sm:h-12" />
-                    </div>
-                  )}
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
-                  <div className="p-3 sm:p-4 text-white">
-                    <h3 className="text-sm sm:text-lg font-semibold">{category.name}</h3>
+                <Link
+                  to={`/shop?category=${category._id}`}
+                  className="group relative block overflow-hidden rounded-2xl shadow-lg"
+                >
+                  <div className="aspect-square w-full flex items-center justify-center">
+                    {category.image ? (
+                      <img
+                        src={category.image}
+                        alt={category.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-2xl"
+                      />
+                    ) : (
+                      <div className="text-amber-500">
+                        <Heart className="w-10 h-10 sm:w-12 sm:h-12" />
+                      </div>
+                    )}
                   </div>
-                </div>
-              </Link>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                    <div className="p-3 sm:p-4 text-white">
+                      <h3 className="text-sm sm:text-lg font-semibold">{category.name}</h3>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Featured Products */}
-      <section className="py-16 sm:py-20 bg-gradient-to-br from-amber-50 to-rose-50">
+      <motion.section className="py-16 sm:py-20 bg-gradient-to-br from-amber-50 to-rose-50" variants={staggeredContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ amount: 0.2 }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 sm:mb-16">
             <h2 className="text-3xl sm:text-4xl  font-cinzel font-bold text-gray-900 mb-4">Featured Collection</h2>
@@ -222,10 +285,13 @@ export default function Home() {
             </Link>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Instagram Reels */}
-      <section className="py-12 sm:py-16 bg-rose-50">
+      <motion.section className="py-12 sm:py-16 bg-rose-50" variants={staggeredContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ amount: 0.2 }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-5xl  font-cinzel font-bold text-gray-900 mb-4 sm:mb-6">
             Moments of Elegance
@@ -234,11 +300,18 @@ export default function Home() {
             Discover our timeless creations — beautifully captured in motion.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6" variants={staggeredContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ amount: 0.2 }}>
             {instaReels.map((item, idx) => (
-              <div
+              <motion.div
                 key={idx}
                 className="relative overflow-hidden rounded-xl shadow-lg group cursor-pointer hover:scale-105 transition-transform duration-300"
+                variants={{
+                  hidden: { opacity: 0, y: 20, scale: 0.95 },
+                  visible: { opacity: 1, y: 0, scale: 1 },
+                }}
               >
                 {/* Video */}
                 <video
@@ -277,14 +350,17 @@ export default function Home() {
                     Shop now
                   </Link>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Testimonials */}
-      <section className="py-16 sm:py-20 bg-white">
+      <motion.section className="py-16 sm:py-20 bg-white" variants={staggeredContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ amount: 0.2 }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 sm:mb-16">
             <h2 className="text-3xl sm:text-4xl font-cinzel font-bold text-gray-900 mb-4">What Our Customers Say</h2>
@@ -292,7 +368,10 @@ export default function Home() {
               Hear from those who have experienced the Kyraa Jewelz difference.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8" variants={staggeredContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ amount: 0.2 }}>
             {[
               {
                 name: "Priya Sharma",
@@ -310,9 +389,10 @@ export default function Home() {
                 rating: 5,
               },
             ].map((testimonial, index) => (
-              <div
+              <motion.div
                 key={index}
                 className="bg-gradient-to-br from-amber-50 to-rose-50 p-6 sm:p-8 rounded-2xl shadow-lg"
+                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               >
                 <div className="flex items-center mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
@@ -323,14 +403,17 @@ export default function Home() {
                   "{testimonial.text}"
                 </p>
                 <div className="font-semibold text-gray-900 text-sm sm:text-base">{testimonial.name}</div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* CTA Section */}
-      <section className="py-16 sm:py-20 bg-gradient-to-r from-amber-400 to-rose-600">
+      <motion.section className="py-16 sm:py-20 bg-gradient-to-r from-amber-400 to-rose-600" variants={staggeredContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ amount: 0.2 }}>
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl sm:text-4xl font-playfair font-bold text-white mb-4 sm:mb-6">
             Ready to Find Your Perfect Piece?
@@ -346,7 +429,7 @@ export default function Home() {
             <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
-      </section>
-    </div>
+      </motion.section>
+    </motion.div>
   );
 }

@@ -1,26 +1,56 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const About: React.FC = () => {
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
+  const staggeredContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+    },
+  };
+
+  const pageVariants = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1, transition: { duration: 0.5 } },
+    exit: { opacity: 0, transition: { duration: 0.3 } },
+  };
+
   return (
-    <div className="bg-white text-gray-800">
+    <motion.div className="bg-white text-gray-800 pt-20"
+      variants={pageVariants} initial="initial" animate="animate" exit="exit">
       {/* Hero Section */}
-      <section className="relative w-full h-[75vh] flex items-center justify-center bg-gray-100">
+      <motion.section
+        className="relative w-full h-[60vh] flex items-center justify-center bg-gray-100"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
         <img
           src="https://i.pinimg.com/736x/ff/9c/20/ff9c204f62b65141a988cde3c7b1484f.jpg"
           alt="Jewelry Hero"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="relative z-10 text-center text-white bg-black/50 p-6 rounded-xl">
+        <motion.div className="relative z-10 text-center text-white bg-black/50 p-6 rounded-xl" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>
           <h1 className="text-4xl md:text-6xl font-bold font-cinzel mb-4">Moments of Elegance</h1>
           <p className="mt-4 text-lg md:text-xl font-lato">
             Discover timeless jewelry for every occasion
           </p>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
       {/* Occasion-Based Inspirations */}
-     <section className="max-w-7xl mx-auto px-4 py-16 space-y-20">
+     <motion.section className="max-w-7xl mx-auto px-4 py-16 space-y-20">
   {[
     {
       title: "Bridal Elegance",
@@ -43,21 +73,35 @@ const About: React.FC = () => {
       img: "https://res.cloudinary.com/dt3dtekuh/image/upload/v1758018663/clscs6o0axljycdt9ldy.jpg",
     },
   ].map((item, idx) => (
-    <div
+    <motion.div
       key={idx}
       className="grid md:grid-cols-2 gap-8 items-center"
+      initial={{ opacity: 0, x: idx % 2 === 0 ? -100 : 100 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ amount: 0.3 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
     >
       {/* Image */}
-      <div className={`${idx % 2 !== 0 ? "md:col-start-2" : ""}`}>
+      <motion.div
+        className={`${idx % 2 !== 0 ? "md:col-start-2" : ""}`}
+        whileHover={{ scale: 1.03 }}
+        transition={{ duration: 0.3 }}
+      >
         <img
           src={item.img}
           alt={item.title}
           className="rounded-2xl shadow-lg w-full h-[400px] object-cover"
         />
-      </div>
+      </motion.div>
 
       {/* Text */}
-      <div className={`space-y-4 ${idx % 2 !== 0 ? "md:col-start-1 md:row-start-1" : ""}`}>
+      <motion.div
+        className={`space-y-4 ${idx % 2 !== 0 ? "md:col-start-1 md:row-start-1" : ""}`}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ amount: 0.5 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
         <h2 className="text-3xl font-bold font-cinzel">{item.title}</h2>
         <p className="text-gray-600 text-justify">{item.desc}</p>
         <Link
@@ -66,19 +110,25 @@ const About: React.FC = () => {
         >
           Shop This Look
         </Link>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   ))}
-</section>
+</motion.section>
 
 
       {/* Lifestyle Gallery */}
-      <section className="bg-gray-50 py-16">
+      <motion.section
+        className="bg-gray-50 py-16"
+        variants={staggeredContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ amount: 0.2 }}
+      >
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">
             Style Inspirations
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" variants={staggeredContainer} initial="hidden" whileInView="visible" viewport={{ amount: 0.2 }}>
             {[
               "https://res.cloudinary.com/dt3dtekuh/image/upload/v1758104856/gdeo9c4ylzxar4vkel8q.png",
               "https://res.cloudinary.com/dt3dtekuh/image/upload/v1758107942/gb10jk94w1msrqabmplq.jpg",
@@ -87,9 +137,10 @@ const About: React.FC = () => {
               "https://res.cloudinary.com/dt3dtekuh/image/upload/v1758108155/ngxoenogmk24tqszdjhm.jpg",
               "https://res.cloudinary.com/dt3dtekuh/image/upload/v1758108087/big9qgokuh2ph1czfeon.jpg",
             ].map((img, idx) => (
-              <div
+              <motion.div
                 key={idx}
                 className="relative group rounded-xl overflow-hidden shadow-lg"
+                variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1 } }}
               >
                 <img
                   src={img}
@@ -104,14 +155,20 @@ const About: React.FC = () => {
                     Shop Now
                   </Link>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-amber-400 to-rose-400 text-white py-16 text-center">
+      <motion.section
+        className="bg-gradient-to-r from-amber-400 to-rose-400 text-white py-16 text-center"
+        variants={staggeredContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ amount: 0.5 }}
+      >
         <h2 className="text-3xl md:text-4xl font-bold">
           Find Your Perfect Piece
         </h2>
@@ -124,8 +181,8 @@ const About: React.FC = () => {
         >
           Shop the Collection
         </Link>
-      </section>
-    </div>
+      </motion.section>
+    </motion.div>
   );
 };
 

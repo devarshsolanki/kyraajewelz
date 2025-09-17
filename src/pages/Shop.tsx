@@ -3,8 +3,8 @@ import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { useSearchParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
-import { Filter, Grid, List, SlidersHorizontal } from "lucide-react";
-
+import { Filter, Grid, List } from "lucide-react";
+import { motion } from "framer-motion";
 export default function Shop() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get("category") || "");
@@ -62,22 +62,39 @@ export default function Shop() {
     setSearchParams({});
   };
 
+  const pageVariants = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1, transition: { duration: 0.5 } },
+    exit: { opacity: 0, transition: { duration: 0.3 } },
+  };
+
   return (
-    <div className="min-h-screen pt-20 bg-gradient-to-br from-amber-50 via-rose-50 to-pink-50">
+    <motion.div className="min-h-screen pt-20 bg-gradient-to-br from-amber-50 via-rose-50 to-pink-50"
+      variants={pageVariants} initial="initial" animate="animate" exit="exit">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="mb-8">
+        <motion.div
+          className="mb-8"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <h1 className=" text-3xl md:text-4xl font-cinzel font-bold bg-gradient-to-r from-amber-600 via-rose-600 to-pink-600 bg-clip-text text-transparent mb-4">
             {searchQuery ? `Search Results for "${searchQuery}"` : "Shop Collection"}
           </h1>
           <p className="text-gray-600 font-lato">
             Discover our exquisite collection of handcrafted jewelry
           </p>
-        </div>
+        </motion.div>
 
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Filters Sidebar */}
-          <div className={`lg:w-64 ${showFilters ? "block" : "hidden lg:block"}`}>
+          <motion.div
+            className={`lg:w-64 ${showFilters ? "block" : "hidden lg:block"}`}
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4 }}
+          >
             <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
@@ -145,7 +162,7 @@ export default function Shop() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Products */}
           <div className="flex-1">
@@ -210,7 +227,7 @@ export default function Shop() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-16">
+              <motion.div className="text-center py-16" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}>
                 <div className="text-6xl text-gray-300 mb-4">🔍</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">No products found</h3>
                 <p className="text-gray-600 mb-6">
@@ -222,11 +239,11 @@ export default function Shop() {
                 >
                   Clear Filters
                 </button>
-              </div>
+              </motion.div>
             )}
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

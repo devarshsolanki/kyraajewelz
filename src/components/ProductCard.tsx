@@ -3,8 +3,7 @@ import { Heart, ShoppingBag, Eye, Star } from "lucide-react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { toast } from "sonner";
-import { useState } from "react";
-
+import { motion } from "framer-motion";
 import { Id } from "../../convex/_generated/dataModel";
 
 interface Product {
@@ -22,9 +21,6 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
-  
   const addToCart = useMutation(api.cart.addToCart);
   const addToWishlist = useMutation(api.wishlist.addToWishlist);
   const removeFromWishlist = useMutation(api.wishlist.removeFromWishlist);
@@ -76,22 +72,25 @@ export default function ProductCard({ product }: ProductCardProps) {
       : 0;
 
   return (
-    <div 
-      className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+    <motion.div
+      className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ amount: 0.2 }}
+      transition={{ duration: 0.5 }}
+      whileHover={{ y: -8 }}
     >
       <Link to={`/product/${product._id}`}>
+        <div>
         {/* Image Container */}
         <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-amber-50 to-rose-50">
           {product.images[0] ? (
-            <img
+            <motion.img
               src={product.images[0]}
               alt={product.name}
-              className={`w-full h-full object-cover transition-all duration-500 ${
-                isHovered ? "scale-110" : "scale-100"
-              } ${imageLoaded ? "opacity-100" : "opacity-0"}`}
-              onLoad={() => setImageLoaded(true)}
+              className="w-full h-full object-cover"
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.4 }}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
@@ -194,6 +193,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             )}
           </div>
         </div>
+        </div>
       </Link>
 
       {/* Add to Cart Button (always visible below card) */}
@@ -209,6 +209,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           </button>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
