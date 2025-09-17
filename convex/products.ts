@@ -187,84 +187,13 @@ export const createProduct = mutation({
       throw new Error("Category not found");
     }
 
-    // Process images to ensure they are stored in Convex storage
-    const processedImages = await Promise.all(
-      args.images.map(async (imageUrl) => {
-        // If it's already a Convex URL, return as is
-        if (imageUrl.startsWith(process.env.CONVEX_SITE_URL || '') ||
-            imageUrl.includes('storage.convex.cloud')) {
-          return imageUrl;
-        }
-        
-        // For data URLs (base64 encoded images)
-        if (imageUrl.startsWith('data:image')) {
-          try {
-            // Convert data URL to blob
-            const response = await fetch(imageUrl);
-            const blob = await response.blob();
-            
-            // Generate upload URL
-            const postUrl = await ctx.storage.generateUploadUrl();
-            
-            // Upload the file
-            const uploadResponse = await fetch(postUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': blob.type },
-              body: blob,
-            });
-            
-            if (!uploadResponse.ok) {
-              throw new Error(`Upload failed: ${uploadResponse.statusText}`);
-            }
-            
-            // Get the storage ID from the response
-            const { storageId } = await uploadResponse.json();
-            return await ctx.storage.getUrl(storageId) || imageUrl;
-          } catch (error) {
-            console.error('Error uploading image:', error);
-            return imageUrl; // Fallback to original URL if upload fails
-          }
-        }
-        
-        // For external URLs, download and re-upload
-        try {
-          // Download the image
-          const response = await fetch(imageUrl);
-          if (!response.ok) throw new Error(`Failed to fetch image: ${response.statusText}`);
-          
-          const blob = await response.blob();
-          
-          // Generate upload URL
-          const postUrl = await ctx.storage.generateUploadUrl();
-          
-          // Upload the file
-          const uploadResponse = await fetch(postUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': blob.type },
-            body: blob,
-          });
-          
-          if (!uploadResponse.ok) {
-            throw new Error(`Upload failed: ${uploadResponse.statusText}`);
-          }
-          
-          // Get the storage ID from the response
-          const { storageId } = await uploadResponse.json();
-          return await ctx.storage.getUrl(storageId) || imageUrl;
-        } catch (error) {
-          console.error('Error processing image:', error);
-          return imageUrl; // Fallback to original URL if upload fails
-        }
-      })
-    );
-
     // Create the product
     const productId = await ctx.db.insert("products", {
       name: args.name,
       description: args.description,
       price: args.price,
       originalPrice: args.originalPrice || args.price,
-      images: processedImages,
+      images: args.images,
       categoryId: args.categoryId,
       material: args.material,
       stock: args.stock,
@@ -311,81 +240,8 @@ export const updateProduct = mutation({
       }
     }
 
-    // If images are being updated, process them
-    if (updates.images) {
-      updates.images = await Promise.all(
-        updates.images.map(async (imageUrl) => {
-          // If it's already a Convex URL, return as is
-          if (imageUrl.startsWith(process.env.CONVEX_SITE_URL || '') || 
-              imageUrl.includes('storage.convex.cloud')) {
-            return imageUrl;
-          }
-          
-          // For data URLs (base64 encoded images)
-          if (imageUrl.startsWith('data:image')) {
-            try {
-              // Convert data URL to blob
-              const response = await fetch(imageUrl);
-              const blob = await response.blob();
-              
-              // Generate upload URL
-              const postUrl = await ctx.storage.generateUploadUrl();
-              
-              // Upload the file
-              const uploadResponse = await fetch(postUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': blob.type },
-                body: blob,
-              });
-              
-              if (!uploadResponse.ok) {
-                throw new Error(`Upload failed: ${uploadResponse.statusText}`);
-              }
-              
-              // Get the storage ID from the response
-              const { storageId } = await uploadResponse.json();
-              return await ctx.storage.getUrl(storageId) || imageUrl;
-            } catch (error) {
-              console.error('Error uploading image:', error);
-              return imageUrl; // Fallback to original URL if upload fails
-            }
-          }
-          
-          // For external URLs, download and re-upload
-          try {
-            // Download the image
-            const response = await fetch(imageUrl);
-            if (!response.ok) throw new Error(`Failed to fetch image: ${response.statusText}`);
-            
-            const blob = await response.blob();
-            
-            // Generate upload URL
-            const postUrl = await ctx.storage.generateUploadUrl();
-            
-            // Upload the file
-            const uploadResponse = await fetch(postUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': blob.type },
-              body: blob,
-            });
-            
-            if (!uploadResponse.ok) {
-              throw new Error(`Upload failed: ${uploadResponse.statusText}`);
-            }
-            
-            // Get the storage ID from the response
-            const { storageId } = await uploadResponse.json();
-            return await ctx.storage.getUrl(storageId) || imageUrl;
-          } catch (error) {
-            console.error('Error processing image:', error);
-            return imageUrl; // Fallback to original URL if upload fails
-          }
-        })
-      );
-    }
-
-    // Filter out empty image URLs
-    if ('images' in updates && Array.isArray(updates.images)) {
+    // If images are being updated, filter out empty image URLs
+    if (updates.images && Array.isArray(updates.images)) {
       updates.images = updates.images.filter((img: string) => img.trim() !== "");
     }
     

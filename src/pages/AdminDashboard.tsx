@@ -24,10 +24,10 @@ import AdminOrders from "../components/admin/AdminOrders";
 const uploadToCloudinary = async (imageFile: File): Promise<string> => {
   const formData = new FormData();
   formData.append("file", imageFile);
-  formData.append("my_preset", "dt3dtekuh"); // Replace with your Cloudinary upload preset
+  formData.append("upload_preset", "my_preset"); // Replace "YOUR_UPLOAD_PRESET" with your Cloudinary upload preset
 
   const response = await fetch(
-    `https://api.cloudinary.com/v1_1/dt3dtekuh/image/upload`, // Replace with your Cloudinary cloud name
+    `https://api.cloudinary.com/v1_1/dt3dtekuh/image/upload`, // Replace "dt3dtekuh" with your Cloudinary cloud name if different
     {
       method: "POST",
       body: formData,
@@ -107,69 +107,19 @@ export default function AdminDashboard() {
     setUploading(true);
     
     try {
-      // Process images - filter out empty strings and handle data URLs
-      const processedImages = [];
-      
-      for (const img of newProduct.images || []) {
-        if (!img.trim()) continue;
-        
-        // If it's a data URL, upload it to storage
-        if (img.startsWith('data:image')) {
-          try {
-            // Convert data URL to blob
-            const response = await fetch(img);
-            const blob = await response.blob();
-            
-            // Create FormData to send the file
-            const formData = new FormData();
-            formData.append('file', new File([blob], `product-${Date.now()}.jpg`, { type: blob.type }));
-            
-            // Upload the file to our API endpoint
-            const uploadResult = await fetch('/api/upload', {
-              method: 'POST',
-              body: formData,
-            });
-            
-            if (!uploadResult.ok) {
-              const error = await uploadResult.text();
-              throw new Error(`Upload failed: ${error}`);
-            }
-            
-            const result = await uploadResult.json();
-            
-            if (!result.url) {
-              throw new Error('Failed to get file URL after upload');
-            }
-            
-            processedImages.push(result.url);
-          } catch (error) {
-            console.error('Error uploading image:', error);
-            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-            toast.error(`Image upload failed: ${errorMessage}`);
-            throw new Error('Failed to upload one or more images');
-          }
-        } else {
-          // Not a data URL, use as is
-          processedImages.push(img);
-        }
-      }
-      
-      const productData: any = {
+      const productData = {
         name: newProduct.name,
         description: newProduct.description,
         price: Number(newProduct.price),
         originalPrice: newProduct.originalPrice || undefined,
-        images: processedImages,
+        images: newProduct.images.filter((img) => img.trim() !== ""),
         categoryId: newProduct.categoryId,
         material: newProduct.material,
         stock: Number(newProduct.stock) || 0,
         isFeatured: !!newProduct.isFeatured,
       };
 
-      // Add optional fields if they have values
-      // No optional fields remaining after removal of occasion, tags, weight, dimensions, availableSizes
-
-      await createProduct(productData);
+      await createProduct(productData as any);
       
       toast.success("Product created successfully!");
       
