@@ -95,7 +95,7 @@ export default function Home() {
         </video>
 
         {/* Overlay Link */}
-        <Link to="/shop" className="absolute inset-0 cursor-pointer z-10" />
+        {/* <Link to="/shop" className="absolute inset-0 cursor-pointer z-10" /> */}
 
         <motion.div
           className="relative z-30 text-center max-w-4xl mx-auto px-4"
@@ -259,9 +259,7 @@ export default function Home() {
       </motion.section>
 
       {/* Featured Products */}
-      <motion.section className="py-16 sm:py-20 bg-gradient-to-br from-amber-50 to-rose-50" variants={staggeredContainer}
-        initial="hidden"
-        whileInView="visible"
+      <motion.section className="py-16 sm:py-20 bg-gradient-to-br from-amber-50 to-rose-50" 
         viewport={{ amount: 0.2 }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 sm:mb-16">
