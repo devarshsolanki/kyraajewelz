@@ -102,11 +102,21 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
 
           {/* Discount Badge */}
-          {discountPercentage > 0&& (
+          {discountPercentage > 0 && (
             <div className="absolute top-4 left-4 bg-red-500 text-white px-2 py-1 rounded-full text-sm font-semibold">
               -{discountPercentage}%
             </div>
           )}
+
+         {/* Wishlist Button (only visible on mobile) */}
+<button
+  onClick={handleWishlistToggle}
+  className={`absolute top-4 right-4 p-2 rounded-full shadow-md transition-all duration-200 sm:hidden
+    ${isInWishlist ? "bg-red-500 text-white" : "bg-white/90 text-gray-700 hover:bg-red-500 hover:text-white"}`}
+>
+  <Heart className={`w-5 h-5 ${isInWishlist ? "fill-current" : ""}`} />
+</button>
+
 
           {/* Stock Badge */}
           {product.stock === 0 && (
@@ -117,10 +127,9 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
           )}
 
-          {/* Hover Actions */}
-          <div className={`absolute inset-0 bg-black/20 flex items-center justify-center gap-3 transition-all duration-300 ${
-            isHovered ? "opacity-100" : "opacity-0"
-          }`}>
+          {/* Hover Actions (desktop only) */}
+          <div className="hidden sm:flex absolute inset-0 bg-black/20 items-center justify-center gap-3 
+                          transition-all duration-300 opacity-0 group-hover:opacity-100">
             <button
               onClick={handleWishlistToggle}
               className={`p-3 rounded-full transition-all duration-200 ${
@@ -148,23 +157,6 @@ export default function ProductCard({ product }: ProductCardProps) {
               </button>
             )}
           </div>
-
-          {/* Sparkle Effect */}
-          {isHovered && (
-            <div className="absolute inset-0 pointer-events-none">
-              {[...Array(5)].map((_, i) => (
-                <div
-                  key={i}
-                  className="absolute w-2 h-2 bg-amber-300 rounded-full animate-ping"
-                  style={{
-                    left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 100}%`,
-                    animationDelay: `${Math.random() * 1}s`,
-                  }}
-                />
-              ))}
-            </div>
-          )}
         </div>
 
         {/* Product Info */}
@@ -173,7 +165,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <h3 className="font-semibold text-gray-900 mb-2 line-clamp-1 group-hover:text-rose-600 transition-colors">
             {product.name}
           </h3>
-          
+
           {/* Rating */}
           <div className="flex items-center mb-3">
             {[...Array(4)].map((_, i) => (
@@ -203,19 +195,20 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
       </Link>
-     <div className="flex justify-center mb-3 px-4">
-  {product.stock > 0 && (
-    <button
-      onClick={handleAddToCart}
-      className="w-full sm:w-auto px-12 py-3 font-lato rounded-lg bg-rose-500 text-white 
-                 hover:bg-rose-600 hover:text-white transition-all duration-200 
-                 max-w-sm"
-    >
-      Add to Cart
-    </button>
-  )}
-</div>
 
+      {/* Add to Cart Button (always visible below card) */}
+      <div className="flex justify-center mb-3 px-4">
+        {product.stock > 0 && (
+          <button
+            onClick={handleAddToCart}
+            className="w-full sm:w-auto px-12 py-3 font-lato rounded-lg bg-rose-500 text-white 
+                       hover:bg-rose-600 hover:text-white transition-all duration-200 
+                       max-w-sm"
+          >
+            Add to Cart
+          </button>
+        )}
+      </div>
     </div>
   );
 }

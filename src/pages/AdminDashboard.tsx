@@ -10,17 +10,37 @@ import {
   Edit,
   Trash2,
   Eye,
-  DollarSign,
   IndianRupee
 } from "lucide-react";
 import { toast } from "sonner";
 import React from "react";
 import axios from "axios";
+import AdminOverview from "../components/admin/AdminOverview";
+import AdminProducts from "../components/admin/AdminProducts";
+import AdminCategories from "../components/admin/AdminCategories";
+import AdminOrders from "../components/admin/AdminOrders";
 
 // Cloudinary config
-const CLOUDINARY_UPLOAD_PRESET = "my_preset";
-const CLOUDINARY_CLOUD_NAME = "dt3dtekuh";
-const CLOUDINARY_API = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+const uploadToCloudinary = async (imageFile: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append("file", imageFile);
+  formData.append("my_preset", "dt3dtekuh"); // Replace with your Cloudinary upload preset
+
+  const response = await fetch(
+    `https://api.cloudinary.com/v1_1/dt3dtekuh/image/upload`, // Replace with your Cloudinary cloud name
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to upload image to Cloudinary");
+  }
+
+  const data = await response.json();
+  return data.secure_url;
+};
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -81,26 +101,6 @@ export default function AdminDashboard() {
     );
   }
 
-  // 1. Unified Cloudinary upload function
-  async function uploadToCloudinary(file: File): Promise<string> {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-    formData.append("cloud_name", CLOUDINARY_CLOUD_NAME);
-    try {
-      const res = await fetch(CLOUDINARY_API, {
-        method: "POST",
-        body: formData,
-      });
-      const data = await res.json();
-      if (data.secure_url) {
-        return data.secure_url;
-      }
-      throw new Error(data.error?.message || "Upload failed");
-    } catch (err: any) {
-      throw new Error(err.message || "Cloudinary upload failed");
-    }
-  }
 
   const handleCreateProduct = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -251,7 +251,7 @@ export default function AdminDashboard() {
   const stats = {
     totalProducts: products.length,
     totalOrders: orders.length,
-    totalRevenue: orders.reduce((sum, order) => sum + order.totalAmount, 0),
+    totalRevenue: orders.filter(order => order.status !== "cancelled").reduce((sum, order) => sum + order.totalAmount, 0),
     pendingOrders: orders.filter(order => order.status === "pending").length,
   };
 
@@ -438,298 +438,30 @@ export default function AdminDashboard() {
           {/* Main Content */}
           <div className="lg:col-span-4">
             {activeTab === "overview" && (
-              <div className="space-y-6">
-                {/* Stats Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  <div className="bg-white rounded-2xl shadow-lg p-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-gray-600">Total Products</p>
-                        <p className="text-2xl font-bold text-gray-900">{stats.totalProducts}</p>
-                      </div>
-                      <Package className="w-8 h-8 text-blue-500" />
-                    </div>
-                  </div>
-
-                  <div className="bg-white rounded-2xl shadow-lg p-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-gray-600">Total Orders</p>
-                        <p className="text-2xl font-bold text-gray-900">{stats.totalOrders}</p>
-                      </div>
-                      <ShoppingBag className="w-8 h-8 text-green-500" />
-                    </div>
-                  </div>
-
-                  <div className="bg-white rounded-2xl shadow-lg p-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-gray-600">Total Revenue</p>
-                        <p className="text-2xl font-bold text-gray-900">₹{stats.totalRevenue.toLocaleString()}</p>
-                      </div>
-                      <IndianRupee className="w-8 h-8 text-amber-500" />
-                    </div>
-                  </div>
-
-                  <div className="bg-white rounded-2xl shadow-lg p-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-gray-600">Pending Orders</p>
-                        <p className="text-2xl font-bold text-gray-900">{stats.pendingOrders}</p>
-                      </div>
-                      <TrendingUp className="w-8 h-8 text-rose-500" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Recent Orders */}
-                <div className="bg-white rounded-2xl shadow-lg p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-6">Recent Orders</h3>
-                  <div className="space-y-4">
-                    {orders.slice(0, 5).map((order) => (
-                      <div key={order._id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-                        <div>
-                          <p className="font-medium">Order #{order.orderNumber}</p>
-                          <p className="text-sm text-gray-500">
-                            {new Date(order._creationTime).toLocaleDateString()}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-semibold">₹{order.totalAmount.toLocaleString()}</p>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                            order.status === "pending" ? "bg-yellow-100 text-yellow-800" :
-                            order.status === "confirmed" ? "bg-blue-100 text-blue-800" :
-                            order.status === "shipped" ? "bg-purple-100 text-purple-800" :
-                            order.status === "delivered" ? "bg-green-100 text-green-800" :
-                            "bg-red-100 text-red-800"
-                          }`}>
-                            {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              <AdminOverview stats={stats} orders={orders} />
             )}
 
             {activeTab === "products" && (
-              <div className="bg-white rounded-2xl shadow-lg p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-semibold text-gray-900">Products</h3>
-                  <button
-                    onClick={() => setShowAddProduct(true)}
-                    className="bg-gradient-to-r from-amber-500 to-rose-500 text-white px-4 py-2 rounded-lg font-semibold hover:from-amber-600 hover:to-rose-600 transition-all duration-300 flex items-center gap-2"
-                  >
-                    <Plus className="w-4 h-4" />
-                    Add Product
-                  </button>
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-gray-200">
-                        <th className="text-left py-3 px-4">Product</th>
-                        <th className="text-left py-3 px-4">Category</th>
-                        <th className="text-left py-3 px-4">Price</th>
-                        <th className="text-left py-3 px-4">Stock</th>
-                        <th className="text-left py-3 px-4">Status</th>
-                        <th className="text-left py-3 px-4">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {products.map((product) => (
-                        <tr key={product._id} className="border-b border-gray-100">
-                          <td className="py-3 px-4">
-                            <div className="flex items-center gap-3">
-                              <div className="w-12 h-12 bg-gradient-to-br from-amber-50 to-rose-50 rounded-lg overflow-hidden">
-                                {product.images[0] ? (
-                                  <img
-                                    src={product.images[0]}
-                                    alt={product.name}
-                                    className="w-full h-full object-cover"
-                                  />
-                                ) : (
-                                  <div className="w-full h-full flex items-center justify-center">
-                                    <Package className="w-6 h-6 text-amber-500" />
-                                  </div>
-                                )}
-                              </div>
-                              <div>
-                                <p className="font-medium">{product.name}</p>
-                                <p className="text-sm text-gray-500">{product.material}</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="py-3 px-4">{product.category}</td>
-                          <td className="py-3 px-4">₹{product.price.toLocaleString()}</td>
-                          <td className="py-3 px-4">{product.stock}</td>
-                          <td className="py-3 px-4">
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                              product.isActive ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-                            }`}>
-                              {product.isActive ? "Active" : "Inactive"}
-                            </span>
-                          </td>
-                          <td className="py-3 px-4">
-                            <div className="flex items-center gap-2">
-                              <button
-                                className="p-1 text-blue-600 hover:bg-blue-50 rounded"
-                                onClick={() => {
-                                  setViewProduct(product);
-                                  setShowViewProduct(true);
-                                }}
-                              >
-                                <Eye className="w-4 h-4" />
-                              </button>
-                              <button
-                                className="p-1 text-amber-600 hover:bg-amber-50 rounded"
-                                onClick={() => {
-                                  setEditProduct({
-                                    ...product,
-                                    images: Array.isArray(product.images) && product.images.length > 0 
-                                      ? [...product.images] 
-                                      : [""],
-                                    originalPrice: product.originalPrice || 0,
-                                  });
-                                  setShowEditProduct(true);
-                                }}
-                              >
-                                <Edit className="w-4 h-4" />
-                              </button>
-                              <button
-                                className="p-1 text-red-600 hover:bg-red-50 rounded"
-                                onClick={() => handleDeleteProduct(product._id)}
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              <AdminProducts
+                products={products}
+                handleDeleteProduct={handleDeleteProduct}
+                setViewProduct={setViewProduct}
+                setShowViewProduct={setShowViewProduct}
+                setEditProduct={setEditProduct}
+                setShowEditProduct={setShowEditProduct}
+                setShowAddProduct={setShowAddProduct}
+              />
             )}
 
             {activeTab === "categories" && (
-              <div className="bg-white rounded-2xl shadow-lg p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-semibold text-gray-900">Categories</h3>
-                  <button
-                    onClick={() => setShowAddCategory(true)}
-                    className="bg-gradient-to-r from-amber-500 to-rose-500 text-white px-4 py-2 rounded-lg font-semibold hover:from-amber-600 hover:to-rose-600 transition-all duration-300 flex items-center gap-2"
-                  >
-                    <Plus className="w-4 h-4" />
-                    Add Category
-                  </button>
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-gray-200">
-                        <th className="text-left py-3 px-4">Name</th>
-                        <th className="text-left py-3 px-4">Description</th>
-                        <th className="text-left py-3 px-4">Image</th>
-                        <th className="text-left py-3 px-4">Status</th>
-                        <th className="text-left py-3 px-4">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {categories.map((cat) => (
-                        <tr key={cat._id} className="border-b border-gray-100">
-                          <td className="py-3 px-4 font-medium">{cat.name}</td>
-                          <td className="py-3 px-4">{cat.description}</td>
-                          <td className="py-3 px-4">
-                            {cat.image ? (
-                              <img src={cat.image} alt={cat.name} className="w-12 h-12 object-cover rounded" />
-                            ) : (
-                              <span className="text-gray-400">No image</span>
-                            )}
-                          </td>
-                          <td className="py-3 px-4">
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                              cat.isActive ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-                            }`}>
-                              {cat.isActive ? "Active" : "Inactive"}
-                            </span>
-                          </td>
-                          <td className="py-3 px-4">
-                            <div className="flex items-center gap-2">
-                              <button
-                                className="p-1 text-amber-600 hover:bg-amber-50 rounded"
-                                onClick={() => {
-                                  setEditCategory({ ...cat });
-                                  setShowEditCategory(true);
-                                }}
-                              >
-                                <Edit className="w-4 h-4" />
-                              </button>
-                              <button
-                                className="p-1 text-red-600 hover:bg-red-50 rounded"
-                                onClick={() => handleDeleteCategory(cat._id)}
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  {categories.length === 0 && (
-                    <div className="text-center text-gray-500 py-8">No categories found.</div>
-                  )}
-                </div>
-              </div>
+              <AdminCategories categories={categories} handleDeleteCategory={handleDeleteCategory} setEditCategory={setEditCategory} setShowEditCategory={setShowEditCategory} setShowAddCategory={setShowAddCategory} />
             )}
 
             {activeTab === "orders" && (
-              <div className="bg-white rounded-2xl shadow-lg p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-6">Orders</h3>
-                <div className="space-y-4">
-                  {orders.map((order) => (
-                    <div key={order._id} className="border border-gray-200 rounded-lg p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <div>
-                          <h4 className="font-semibold">Order #{order.orderNumber}</h4>
-                          <p className="text-sm text-gray-500">
-                            {new Date(order._creationTime).toLocaleDateString()}
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-4">
-                          <select
-                            value={order.status}
-                            onChange={(e) => handleUpdateOrderStatus(order._id, e.target.value)}
-                            className="px-3 py-1 border border-gray-300 rounded-lg text-sm"
-                          >
-                            <option value="pending">Pending</option>
-                            <option value="confirmed">Confirmed</option>
-                            <option value="shipped">Shipped</option>
-                            <option value="delivered">Delivered</option>
-                            <option value="cancelled">Cancelled</option>
-                          </select>
-                          <span className="font-semibold">₹{order.totalAmount.toLocaleString()}</span>
-                        </div>
-                      </div>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                        <div>
-                          <p className="font-medium mb-1">Customer:</p>
-                          <p>{order.shippingAddress.fullName}</p>
-                          <p>{order.shippingAddress.phone}</p>
-                        </div>
-                        <div>
-                          <p className="font-medium mb-1">Shipping Address:</p>
-                          <p>{order.shippingAddress.address}</p>
-                          <p>{order.shippingAddress.city}, {order.shippingAddress.state} {order.shippingAddress.zipCode}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <AdminOrders
+                orders={orders}
+                handleUpdateOrderStatus={handleUpdateOrderStatus}
+              />
             )}
           </div>
         </div>

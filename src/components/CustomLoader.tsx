@@ -1,6 +1,7 @@
 // ShimmerLoader.tsx
 import React from "react";
 import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
 
 const ShimmerLoader: React.FC = () => {
   return (
@@ -8,7 +9,7 @@ const ShimmerLoader: React.FC = () => {
       <div className="relative">
         {/* Shimmer Text */}
         <motion.h1
-          className="text-4xl font-extrabold tracking-wide relative"
+          className="text-4xl font-cinzel font-bold tracking-wide relative p-2" 
           style={{
             background: "linear-gradient(90deg, #d4af37, #fff, #d4af37)",
             backgroundSize: "200% 100%",
@@ -27,7 +28,7 @@ const ShimmerLoader: React.FC = () => {
           animate={{ opacity: [0, 1, 0], scale: [0.5, 1.4, 0.5] }}
           transition={{ repeat: Infinity, duration: 1.8, delay: 0.3 }}
         >
-          ✨
+        <Sparkles />
         </motion.div>
 
         {/* Sparkle - Bottom Right */}
@@ -36,7 +37,7 @@ const ShimmerLoader: React.FC = () => {
           animate={{ opacity: [0, 1, 0], scale: [0.5, 1.4, 0.5] }}
           transition={{ repeat: Infinity, duration: 1.8, delay: 1 }}
         >
-          ✨
+        <Sparkles />
         </motion.div>
       </div>
     </div>

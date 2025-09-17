@@ -36,7 +36,7 @@ export default function Profile() {
     { id: "profile", name: "Profile", icon: User },
     { id: "orders", name: "Orders", icon: Package },
     { id: "wishlist", name: "Wishlist", icon: Heart },
-    { id: "settings", name: "Settings", icon: Settings },
+    // { id: "settings", name: "Settings", icon: Settings },
   ];
 
   const getStatusColor = (status: string) => {
@@ -396,7 +396,7 @@ export default function Profile() {
                     return;
                   }
                   try {
-                    // await cancelOrder({ orderId: cancelDialog.orderId });
+                    await cancelOrder({ orderId: cancelDialog.orderId });
                     toast.success("Order cancelled successfully");
                   } catch (err: any) {
                     toast.error(err.message || "Failed to cancel order");
