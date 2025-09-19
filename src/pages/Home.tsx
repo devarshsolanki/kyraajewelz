@@ -12,6 +12,148 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
 
+// Gradient background component for hero section only
+const HeroGradientBackground = () => (
+  <>
+    <style>{`
+      .hero-gradient-bg {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        pointer-events: none;
+        z-index: 1;
+      }
+      .hero-gradient-background {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: linear-gradient(45deg, rgba(239, 188, 241, 1) 0%, rgba(253, 164, 175, 1) 40%, #ec4899 100%);
+        background-size: 400% 400%;
+        animation: luxuryFlow 18s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        z-index: 1;
+      }
+      .hero-gradient-layer-1 {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(ellipse 100% 100% at 20% 30%, rgba(253, 224, 71, 0.6) 0%, rgba(253, 164, 175, 0.5) 20%, rgba(236, 72, 153, 0.4) 50%, transparent 10%);
+        animation: etherealDrift 22s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+        mix-blend-mode: multiply;
+        z-index: 2;
+      }
+      .hero-gradient-layer-2 {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(ellipse 120% 100% at 50% 40%, rgba(253, 164, 175, 0.7) 0%, rgba(236, 72, 153, 0.5) 35%, rgba(253, 224, 71, 0.4) 55%, transparent 10%);
+        animation: silkWave 26s cubic-bezier(0.165, 0.84, 0.44, 1) infinite reverse;
+        mix-blend-mode: screen;
+        z-index: 3;
+      }
+      .hero-gradient-layer-3 {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(-60deg, rgba(253, 224, 71, 0.5) 0%, rgba(253, 164, 175, 0.4) 25%, rgba(236, 72, 153, 0.45) 40%, rgba(253, 224, 71, 0.4) 55%, rgba(253, 164, 175, 0.3) 10%);
+        background-size: 300% 300%;
+        animation: gentleBreeze 30s cubic-bezier(0.19, 1, 0.22, 1) infinite;
+        mix-blend-mode: overlay;
+        opacity: 0.8;
+        z-index: 4;
+      }
+      .hero-gradient-layer-4 {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(circle at 15% 25%, rgba(253, 224, 71, 0.08) 0%, transparent 45%), radial-gradient(circle at 85% 75%, rgba(253, 164, 175, 0.08) 0%, transparent 45%), radial-gradient(circle at 45% 60%, rgba(236, 72, 153, 0.06) 0%, transparent 50%);
+        animation: lightWaves 24s ease-in-out infinite;
+        z-index: 5;
+      }
+      .hero-gradient-layer-5 {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(60deg, rgba(253, 224, 71, 0.12) 0%, rgba(253, 164, 175, 0.1) 50%, rgba(236, 72, 153, 0.08) 100%);
+        background-size: 400% 400%;
+        animation: dreamyFlow 44s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        mix-blend-mode: color-dodge;
+        opacity: 0.5;
+        z-index: 6;
+      }
+      @keyframes luxuryFlow {
+        0% { background-position: 0% 0%; }
+        16.66% { background-position: 100% 25%; }
+        33.33% { background-position: 75% 100%; }
+        50% { background-position: 0% 75%; }
+        66.66% { background-position: 25% 0%; }
+        83.33% { background-position: 100% 50%; }
+        100% { background-position: 0% 0%; }
+      }
+      @keyframes etherealDrift {
+        0% { transform: translate(0%, 0%) scale(1) rotate(0deg); opacity: 0.6; }
+        25% { transform: translate(-15%, -8%) scale(1.2) rotate(3deg); opacity: 0.8; }
+        50% { transform: translate(8%, -15%) scale(0.85) rotate(-2deg); opacity: 0.5; }
+        75% { transform: translate(12%, 10%) scale(1.1) rotate(4deg); opacity: 0.7; }
+        100% { transform: translate(0%, 0%) scale(1) rotate(0deg); opacity: 0.6; }
+      }
+      @keyframes silkWave {
+        0% { transform: translate(0%, 0%) scale(1); background-position: 0% 0%; }
+        33% { transform: translate(10%, -12%) scale(1.15); background-position: 50% 70%; }
+        66% { transform: translate(-8%, 6%) scale(0.88); background-position: 100% 30%; }
+        100% { transform: translate(0%, 0%) scale(1); background-position: 0% 0%; }
+      }
+      @keyframes gentleBreeze {
+        0% { background-position: 0% 0%; }
+        16.66% { background-position: 30% 25%; }
+        33.33% { background-position: 70% 50%; }
+        50% { background-position: 90% 75%; }
+        66.66% { background-position: 60% 90%; }
+        83.33% { background-position: 20% 65%; }
+        100% { background-position: 0% 0%; }
+      }
+      @keyframes lightWaves {
+        0%, 100% { opacity: 0.08; transform: scale(1) rotate(0deg); }
+        25% { opacity: 0.15; transform: scale(1.03) rotate(1deg); }
+        50% { opacity: 0.05; transform: scale(0.97) rotate(-0.5deg); }
+        75% { opacity: 0.12; transform: scale(1.01) rotate(0.8deg); }
+      }
+      @keyframes dreamyFlow {
+        0% { background-position: 0% 0%; }
+        12.5% { background-position: 20% 30%; }
+        25% { background-position: 50% 60%; }
+        37.5% { background-position: 80% 40%; }
+        50% { background-position: 100% 70%; }
+        62.5% { background-position: 70% 100%; }
+        75% { background-position: 40% 80%; }
+        87.5% { background-position: 10% 50%; }
+        100% { background-position: 0% 0%; }
+      }
+      @media (min-resolution: 2dppx) {
+        .hero-gradient-background { background-size: 800% 800%; }
+        .hero-gradient-layer-1, .hero-gradient-layer-2 { filter: blur(0.3px); }
+      }
+      @media (min-resolution: 3dppx) {
+        .hero-gradient-background { background-size: 1000% 1000%; }
+        .hero-gradient-layer-3 { background-size: 700% 700%; }
+      }
+      @media (min-aspect-ratio: 21/9) {
+        .hero-gradient-background { background-size: 900% 600%; }
+      }
+      @media (max-width: 768px) {
+        .hero-gradient-layer-4, .hero-gradient-layer-5 { display: none; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .hero-gradient-background,
+        .hero-gradient-layer-1,
+        .hero-gradient-layer-2,
+        .hero-gradient-layer-3,
+        .hero-gradient-layer-4,
+        .hero-gradient-layer-5 {
+          animation-duration: 80s;
+        }
+      }
+    `}</style>
+    <div className="hero-gradient-bg">
+      <div className="hero-gradient-background" />
+      <div className="hero-gradient-layer-1" />
+      <div className="hero-gradient-layer-2" />
+      <div className="hero-gradient-layer-3" />
+      <div className="hero-gradient-layer-4" />
+      <div className="hero-gradient-layer-5" />
+    </div>
+  </>
+);
+
 export default function Home() {
   const featuredProducts = useQuery(api.products.getFeaturedProducts);
   const categories = useQuery(api.categories.getCategories);
@@ -81,112 +223,159 @@ export default function Home() {
   };
 
   return (
-    <motion.div className="min-h-screen" variants={pageVariants} initial="initial" animate="animate" exit="exit">
-      {/* Hero Section */}
-      <section className="relative h-[90vh] sm:h-screen flex items-center justify-center overflow-hidden">
-        <video
-          className="absolute inset-0 w-full h-full object-cover"
-          autoPlay
-          loop
-          muted
-          playsInline
-        >
-          <source src="https://cdn.pixabay.com/video/2019/10/09/27669-365224683_large.mp4" type="video/mp4" />
-        </video>
+    <>
+      <motion.div className="min-h-screen" variants={pageVariants} initial="initial" animate="animate" exit="exit">
+        {/* Hero Section */}
+        <section className="relative h-[90vh] sm:h-screen flex items-center justify-center overflow-hidden">
+          <HeroGradientBackground />
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
+            <source src="https://res.cloudinary.com/dvfwqwnlf/video/upload/v1758182061/Hailuo_Video_An_ultra_high-resolution_8K_se_424991018201751555_yf3rc1.mp4" type="video/mp4" />
+          </video>
 
-        {/* Overlay Link */}
-        {/* <Link to="/shop" className="absolute inset-0 cursor-pointer z-10" /> */}
+          {/* Overlay Link */}
+          {/* <Link to="/shop" className="absolute inset-0 cursor-pointer z-10" /> */}
 
-        <motion.div
-          className="relative z-30 text-center max-w-4xl mx-auto px-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-        >
-          <motion.h1
-            className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 leading-tight"
+          <motion.div
+            className="relative z-30 text-center max-w-4xl mx-auto px-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           >
-            <span className=" font-playfair bg-gradient-to-r from-amber-600 via-rose-600 to-pink-600 bg-clip-text text-transparent">
-              Kyraa Jewelz
-            </span>
-          </motion.h1>
-          <motion.p
-            className="text-lg sm:text-2xl md:text-3xl text-gray-100 mb-4 font-light"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            Elegance that Defines You
-          </motion.p>
-          <motion.p
-            className="text-sm sm:text-base md:text-lg text-gray-100 mb-8 max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
-            Discover our exquisite collection of handcrafted jewelry, where timeless elegance meets contemporary design.
-          </motion.p>
-          <motion.div className="flex flex-col sm:flex-row gap-4 justify-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 1.0 }}>
-            <Link
-              to="/shop"
-              className="bg-gradient-to-r from-amber-500 to-rose-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:from-amber-600 hover:to-rose-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center group"
+            <motion.h1
+              className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 leading-tight"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Shop Collection
-              <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link
-              to="/about"
-              className="border-2 border-gray-300 text-gray-100 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:border-rose-500 hover:text-rose-600 transition-all duration-300 transform hover:scale-105"
+              <span
+                className="font-playfair bg-gradient-to-r from-amber-600 via-rose-600 to-pink-600 bg-clip-text text-transparent animate-gradient-move"
+                
+              >
+                Kyraa Jewelz
+              </span>
+            </motion.h1>
+            <motion.p
+              className="text-lg sm:text-2xl md:text-3xl font-thin text-gray-100 mb-4 "
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
             >
-              Our Story
-            </Link>
+              Elegance that Defines You
+            </motion.p>
+            <motion.p
+              className="text-sm sm:text-base md:text-lg text-gray-100 mb-8 max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+            >
+              Discover our exquisite collection of handcrafted jewelry, where timeless elegance meets contemporary design.
+            </motion.p>
+            <motion.div className="flex flex-col sm:flex-row gap-4 justify-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 1.0 }}>
+              <Link
+                to="/shop"
+                className="bg-gradient-to-r from-amber-500 to-rose-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:from-amber-600 hover:to-rose-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center group"
+              >
+                Shop Collection
+                <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link
+                to="/about"
+                className="border-2 border-white text-gray-100 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:border-rose-500 hover:text-rose-600 transition-all duration-300 transform hover:scale-105"
+              >
+                Our Story
+              </Link>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      </section>
+        </section>
 
-      {/* Categories Section */}
-      <motion.section
-        className="py-16 sm:py-20 bg-white"
-        variants={staggeredContainer}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ amount: 0.2 }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl  font-cinzel font-bold text-gray-900 mb-4">
-              Explore Our Collections
-            </h2>
-            <p className="font-lato sm:text-xl text-gray-600 max-w-2xl mx-auto">
-              From timeless classics to contemporary designs, find the perfect piece for every occasion.
-            </p>
-          </div>
+        {/* Categories Section */}
+        <motion.section
+          className="py-16 sm:py-20 bg-white"
+          variants={staggeredContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ amount: 0.2 }}
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10 sm:mb-16">
+              <h2 className="text-3xl sm:text-4xl  font-cinzel font-bold text-gray-900 mb-4">
+                Explore Our Collections
+              </h2>
+              <p className="font-lato sm:text-xl text-gray-600 max-w-2xl mx-auto">
+                From timeless classics to contemporary designs, find the perfect piece for every occasion.
+              </p>
+            </div>
 
-          {/* Desktop Swiper */}
-          <div className="hidden lg:block">
-            <Swiper
-              effect={"coverflow"}
-              grabCursor={true}
-              centeredSlides={true}
-              slidesPerView={"auto"}
-              loop={false}
-              initialSlide={Math.floor((categories?.length || 5) / 2)}
-              coverflowEffect={{
-                rotate: 0,
-                stretch: -50,
-                depth: 250,
-                modifier: 1.5,
-                slideShadows: true,
-              }}
-              navigation
-              modules={[EffectCoverflow, Navigation]}
-              className="w-full"
+            {/* Desktop Swiper */}
+            <div className="hidden lg:block">
+              <Swiper
+                effect={"coverflow"}
+                grabCursor={true}
+                centeredSlides={true}
+                slidesPerView={"auto"}
+                loop={false}
+                initialSlide={Math.floor((categories?.length || 5) / 2)}
+                coverflowEffect={{
+                  rotate: 0,
+                  stretch: -50,
+                  depth: 250,
+                  modifier: 1.5,
+                  slideShadows: true,
+                }}
+                navigation
+                modules={[EffectCoverflow, Navigation]}
+                className="w-full"
+              >
+                {categories?.map((category) => (
+                  <SwiperSlide key={category._id} className="!w-[280px] xl:!w-[310px] cursor-pointer">
+                    <Link
+                      to={`/shop?category=${category._id}`}
+                      className="group relative block overflow-hidden rounded-2xl shadow-lg"
+                    >
+                      <div className="aspect-square w-full flex items-center justify-center">
+                        {category.image ? (
+                          <img
+                            src={category.image}
+                            alt={category.name}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 rounded-2xl"
+                          />
+                        ) : (
+                          <div className="text-6xl text-amber-500">
+                            <Heart className="w-16 h-16" />
+                          </div>
+                        )}
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                        <div className="p-6 text-white">
+                          <h3 className="text-lg xl:text-xl font-semibold mb-1">{category.name}</h3>
+                          <p className="text-xs sm:text-sm opacity-90">{category.description}</p>
+                        </div>
+                      </div>
+                    </Link>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+
+            {/* Mobile Grid */}
+            <motion.div
+              className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 lg:hidden"
+              variants={staggeredContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ amount: 0.2 }}
             >
               {categories?.map((category) => (
-                <SwiperSlide key={category._id} className="!w-[280px] xl:!w-[310px] cursor-pointer">
+                <motion.div
+                  key={category._id}
+                  variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+                >
                   <Link
                     to={`/shop?category=${category._id}`}
                     className="group relative block overflow-hidden rounded-2xl shadow-lg"
@@ -196,238 +385,206 @@ export default function Home() {
                         <img
                           src={category.image}
                           alt={category.name}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 rounded-2xl"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-2xl"
                         />
                       ) : (
-                        <div className="text-6xl text-amber-500">
-                          <Heart className="w-16 h-16" />
+                        <div className="text-amber-500">
+                          <Heart className="w-10 h-10 sm:w-12 sm:h-12" />
                         </div>
                       )}
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
-                      <div className="p-6 text-white">
-                        <h3 className="text-lg xl:text-xl font-semibold mb-1">{category.name}</h3>
-                        <p className="text-xs sm:text-sm opacity-90">{category.description}</p>
+                      <div className="p-3 sm:p-4 text-white">
+                        <h3 className="text-sm sm:text-lg font-semibold">{category.name}</h3>
                       </div>
                     </div>
                   </Link>
-                </SwiperSlide>
+                </motion.div>
               ))}
-            </Swiper>
+            </motion.div>
           </div>
+        </motion.section>
 
-          {/* Mobile Grid */}
-          <motion.div
-            className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 lg:hidden"
-            variants={staggeredContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ amount: 0.2 }}
-          >
-            {categories?.map((category) => (
-              <motion.div
-                key={category._id}
-                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+        {/* Featured Products */}
+        <motion.section className="py-16 sm:py-20 bg-gradient-to-br from-amber-50 to-rose-50" 
+          viewport={{ amount: 0.2 }}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10 sm:mb-16">
+              <h2 className="text-3xl sm:text-4xl  font-cinzel font-bold text-gray-900 mb-4">Featured Collection</h2>
+              <p className="font-lato sm:text-xl text-gray-600 max-w-2xl mx-auto">
+                Handpicked pieces that showcase our finest craftsmanship and design excellence.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+              {featuredProducts?.slice(0, 8).map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
+            </div>
+            <div className="text-center mt-10 sm:mt-12">
+              <Link
+                to="/shop"
+                className="inline-flex items-center bg-gradient-to-r from-amber-500 to-rose-500 text-white px-6 sm:px-8 py-3 rounded-full font-semibold text-base sm:text-lg hover:from-amber-600 hover:to-rose-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
               >
-                <Link
-                  to={`/shop?category=${category._id}`}
-                  className="group relative block overflow-hidden rounded-2xl shadow-lg"
-                >
-                  <div className="aspect-square w-full flex items-center justify-center">
-                    {category.image ? (
-                      <img
-                        src={category.image}
-                        alt={category.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-2xl"
-                      />
-                    ) : (
-                      <div className="text-amber-500">
-                        <Heart className="w-10 h-10 sm:w-12 sm:h-12" />
-                      </div>
-                    )}
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
-                    <div className="p-3 sm:p-4 text-white">
-                      <h3 className="text-sm sm:text-lg font-semibold">{category.name}</h3>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </motion.section>
+                View All Products
+                <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </motion.section>
 
-      {/* Featured Products */}
-      <motion.section className="py-16 sm:py-20 bg-gradient-to-br from-amber-50 to-rose-50" 
-        viewport={{ amount: 0.2 }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl  font-cinzel font-bold text-gray-900 mb-4">Featured Collection</h2>
-            <p className="font-lato sm:text-xl text-gray-600 max-w-2xl mx-auto">
-              Handpicked pieces that showcase our finest craftsmanship and design excellence.
+        {/* Instagram Reels */}
+        <motion.section className="py-12 sm:py-16 bg-rose-50" variants={staggeredContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ amount: 0.2 }}>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl sm:text-5xl  font-cinzel font-bold text-gray-900 mb-4 sm:mb-6">
+              Moments of Elegance
+            </h2>
+            <p className="font-lato sm:text-2xl text-gray-600 mb-8 sm:mb-12">
+              Discover our timeless creations — beautifully captured in motion.
             </p>
+
+            <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6" variants={staggeredContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ amount: 0.2 }}>
+              {instaReels.map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  className="relative overflow-hidden rounded-xl shadow-lg group cursor-pointer hover:scale-105 transition-transform duration-300"
+                  variants={{
+                    hidden: { opacity: 0, y: 20, scale: 0.95 },
+                    visible: { opacity: 1, y: 0, scale: 1 },
+                  }}
+                >
+                  {/* Video */}
+                  <video
+                    ref={(el) => (videoRefs.current[idx] = el)}
+                    src={item.video}
+                    className="w-full h-[400px] sm:h-[400px] md:h-[450px] object-cover"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                  />
+
+                  {/* Volume Button */}
+                  <button
+                    onClick={() => toggleSound(idx)}
+                    className="absolute top-2 right-2 sm:top-3 sm:right-3 bg-black/60 hover:bg-black text-white p-1 sm:p-2 rounded-full"
+                  >
+                    {activeVideo === idx ? (
+                      <Volume2 size={18} className="sm:w-5 sm:h-5" />
+                    ) : (
+                      <VolumeX size={18} className="sm:w-5 sm:h-5" />
+                    )}
+                  </button>
+
+                  {/* Product Overlay */}
+                  <div className="absolute bottom-0 left-0 w-full bg-black/50 p-3 sm:p-4 text-left group-hover:opacity-100 transition-opacity duration-300">
+                    <h3 className="text-white font-semibold text-sm sm:text-lg">
+                      {item.productName}
+                    </h3>
+                    <p className="text-white/90 text-xs sm:text-sm">{item.productDesc}</p>
+
+                    <Link
+                      to="/shop"
+                      className="inline-flex items-center text-white bg-gradient-to-r from-pink-600 via-rose-600 to-amber-600 px-3 sm:px-4 py-1.5 rounded-lg font-semibold text-xs sm:text-sm mt-2"
+                    >
+                      Shop now
+                    </Link>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {featuredProducts?.slice(0, 8).map((product) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
+        </motion.section>
+
+        {/* Testimonials */}
+        <motion.section className="py-16 sm:py-20 bg-white" variants={staggeredContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ amount: 0.2 }}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10 sm:mb-16">
+              <h2 className="text-3xl sm:text-4xl font-cinzel font-bold text-gray-900 mb-4">What Our Customers Say</h2>
+              <p className="font-lato sm:text-xl text-gray-600">
+                Hear from those who have experienced the Kyraa Jewelz difference.
+              </p>
+            </div>
+            <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8" variants={staggeredContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ amount: 0.2 }}>
+              {[
+                {
+                  name: "Priya Sharma",
+                  text: "Absolutely stunning jewelry! The craftsmanship is exceptional and the designs are so elegant. I've received countless compliments.",
+                  rating: 5,
+                },
+                {
+                  name: "Anita Patel",
+                  text: "The quality is outstanding and the customer service is top-notch. My wedding jewelry from Kyraa Jewelz made my special day even more beautiful.",
+                  rating: 5,
+                },
+                {
+                  name: "Meera Singh",
+                  text: "I love how each piece tells a story. The attention to detail and the luxurious feel make every purchase worth it.",
+                  rating: 5,
+                },
+              ].map((testimonial, index) => (
+                <motion.div
+                  key={index}
+                  className="bg-gradient-to-br from-amber-50 to-rose-50 p-6 sm:p-8 rounded-2xl shadow-lg"
+                  variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+                >
+                  <div className="flex items-center mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 fill-current" />
+                    ))}
+                  </div>
+                  <p className="text-gray-700 mb-4 sm:mb-6 italic text-sm sm:text-base">
+                    "{testimonial.text}"
+                  </p>
+                  <div className="font-semibold text-gray-900 text-sm sm:text-base">{testimonial.name}</div>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
-          <div className="text-center mt-10 sm:mt-12">
+        </motion.section>
+
+        {/* CTA Section */}
+        <motion.section className="py-16 sm:py-20 bg-gradient-to-r from-amber-400 to-rose-600" variants={staggeredContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ amount: 0.2 }}>
+          <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl sm:text-4xl font-playfair font-bold text-white mb-4 sm:mb-6">
+              Ready to Find Your Perfect Piece?
+            </h2>
+            <p className="text-base sm:text-xl text-white/90 mb-6 sm:mb-8">
+              Join thousands of satisfied customers who have found their perfect jewelry at Kyraa Jewelz.
+            </p>
             <Link
               to="/shop"
-              className="inline-flex items-center bg-gradient-to-r from-amber-500 to-rose-500 text-white px-6 sm:px-8 py-3 rounded-full font-semibold text-base sm:text-lg hover:from-amber-600 hover:to-rose-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
+              className="inline-flex items-center bg-white text-rose-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
             >
-              View All Products
+              Start Shopping
               <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
-        </div>
-      </motion.section>
-
-      {/* Instagram Reels */}
-      <motion.section className="py-12 sm:py-16 bg-rose-50" variants={staggeredContainer}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ amount: 0.2 }}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-5xl  font-cinzel font-bold text-gray-900 mb-4 sm:mb-6">
-            Moments of Elegance
-          </h2>
-          <p className="font-lato sm:text-2xl text-gray-600 mb-8 sm:mb-12">
-            Discover our timeless creations — beautifully captured in motion.
-          </p>
-
-          <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6" variants={staggeredContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ amount: 0.2 }}>
-            {instaReels.map((item, idx) => (
-              <motion.div
-                key={idx}
-                className="relative overflow-hidden rounded-xl shadow-lg group cursor-pointer hover:scale-105 transition-transform duration-300"
-                variants={{
-                  hidden: { opacity: 0, y: 20, scale: 0.95 },
-                  visible: { opacity: 1, y: 0, scale: 1 },
-                }}
-              >
-                {/* Video */}
-                <video
-                  ref={(el) => (videoRefs.current[idx] = el)}
-                  src={item.video}
-                  className="w-full h-[400px] sm:h-[400px] md:h-[450px] object-cover"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                />
-
-                {/* Volume Button */}
-                <button
-                  onClick={() => toggleSound(idx)}
-                  className="absolute top-2 right-2 sm:top-3 sm:right-3 bg-black/60 hover:bg-black text-white p-1 sm:p-2 rounded-full"
-                >
-                  {activeVideo === idx ? (
-                    <Volume2 size={18} className="sm:w-5 sm:h-5" />
-                  ) : (
-                    <VolumeX size={18} className="sm:w-5 sm:h-5" />
-                  )}
-                </button>
-
-                {/* Product Overlay */}
-                <div className="absolute bottom-0 left-0 w-full bg-black/50 p-3 sm:p-4 text-left group-hover:opacity-100 transition-opacity duration-300">
-                  <h3 className="text-white font-semibold text-sm sm:text-lg">
-                    {item.productName}
-                  </h3>
-                  <p className="text-white/90 text-xs sm:text-sm">{item.productDesc}</p>
-
-                  <Link
-                    to="/shop"
-                    className="inline-flex items-center text-white bg-gradient-to-r from-pink-600 via-rose-600 to-amber-600 px-3 sm:px-4 py-1.5 rounded-lg font-semibold text-xs sm:text-sm mt-2"
-                  >
-                    Shop now
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </motion.section>
-
-      {/* Testimonials */}
-      <motion.section className="py-16 sm:py-20 bg-white" variants={staggeredContainer}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ amount: 0.2 }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl font-cinzel font-bold text-gray-900 mb-4">What Our Customers Say</h2>
-            <p className="font-lato sm:text-xl text-gray-600">
-              Hear from those who have experienced the Kyraa Jewelz difference.
-            </p>
-          </div>
-          <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8" variants={staggeredContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ amount: 0.2 }}>
-            {[
-              {
-                name: "Priya Sharma",
-                text: "Absolutely stunning jewelry! The craftsmanship is exceptional and the designs are so elegant. I've received countless compliments.",
-                rating: 5,
-              },
-              {
-                name: "Anita Patel",
-                text: "The quality is outstanding and the customer service is top-notch. My wedding jewelry from Kyraa Jewelz made my special day even more beautiful.",
-                rating: 5,
-              },
-              {
-                name: "Meera Singh",
-                text: "I love how each piece tells a story. The attention to detail and the luxurious feel make every purchase worth it.",
-                rating: 5,
-              },
-            ].map((testimonial, index) => (
-              <motion.div
-                key={index}
-                className="bg-gradient-to-br from-amber-50 to-rose-50 p-6 sm:p-8 rounded-2xl shadow-lg"
-                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              >
-                <div className="flex items-center mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 fill-current" />
-                  ))}
-                </div>
-                <p className="text-gray-700 mb-4 sm:mb-6 italic text-sm sm:text-base">
-                  "{testimonial.text}"
-                </p>
-                <div className="font-semibold text-gray-900 text-sm sm:text-base">{testimonial.name}</div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </motion.section>
-
-      {/* CTA Section */}
-      <motion.section className="py-16 sm:py-20 bg-gradient-to-r from-amber-400 to-rose-600" variants={staggeredContainer}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ amount: 0.2 }}>
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-playfair font-bold text-white mb-4 sm:mb-6">
-            Ready to Find Your Perfect Piece?
-          </h2>
-          <p className="text-base sm:text-xl text-white/90 mb-6 sm:mb-8">
-            Join thousands of satisfied customers who have found their perfect jewelry at Kyraa Jewelz.
-          </p>
-          <Link
-            to="/shop"
-            className="inline-flex items-center bg-white text-rose-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
-          >
-            Start Shopping
-            <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
-      </motion.section>
-    </motion.div>
+        </motion.section>
+        <style>
+{`
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+`}
+</style>
+      </motion.div>
+    </>
   );
 }
