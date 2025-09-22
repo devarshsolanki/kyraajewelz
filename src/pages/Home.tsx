@@ -12,148 +12,6 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
 
-// Gradient background component for hero section only
-const HeroGradientBackground = () => (
-  <>
-    <style>{`
-      .hero-gradient-bg {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        pointer-events: none;
-        z-index: 1;
-      }
-      .hero-gradient-background {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: linear-gradient(45deg, rgba(239, 188, 241, 1) 0%, rgba(253, 164, 175, 1) 40%, #ec4899 100%);
-        background-size: 400% 400%;
-        animation: luxuryFlow 18s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        z-index: 1;
-      }
-      .hero-gradient-layer-1 {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background: radial-gradient(ellipse 100% 100% at 20% 30%, rgba(253, 224, 71, 0.6) 0%, rgba(253, 164, 175, 0.5) 20%, rgba(236, 72, 153, 0.4) 50%, transparent 10%);
-        animation: etherealDrift 22s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
-        mix-blend-mode: multiply;
-        z-index: 2;
-      }
-      .hero-gradient-layer-2 {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background: radial-gradient(ellipse 120% 100% at 50% 40%, rgba(253, 164, 175, 0.7) 0%, rgba(236, 72, 153, 0.5) 35%, rgba(253, 224, 71, 0.4) 55%, transparent 10%);
-        animation: silkWave 26s cubic-bezier(0.165, 0.84, 0.44, 1) infinite reverse;
-        mix-blend-mode: screen;
-        z-index: 3;
-      }
-      .hero-gradient-layer-3 {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background: linear-gradient(-60deg, rgba(253, 224, 71, 0.5) 0%, rgba(253, 164, 175, 0.4) 25%, rgba(236, 72, 153, 0.45) 40%, rgba(253, 224, 71, 0.4) 55%, rgba(253, 164, 175, 0.3) 10%);
-        background-size: 300% 300%;
-        animation: gentleBreeze 30s cubic-bezier(0.19, 1, 0.22, 1) infinite;
-        mix-blend-mode: overlay;
-        opacity: 0.8;
-        z-index: 4;
-      }
-      .hero-gradient-layer-4 {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background: radial-gradient(circle at 15% 25%, rgba(253, 224, 71, 0.08) 0%, transparent 45%), radial-gradient(circle at 85% 75%, rgba(253, 164, 175, 0.08) 0%, transparent 45%), radial-gradient(circle at 45% 60%, rgba(236, 72, 153, 0.06) 0%, transparent 50%);
-        animation: lightWaves 24s ease-in-out infinite;
-        z-index: 5;
-      }
-      .hero-gradient-layer-5 {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background: linear-gradient(60deg, rgba(253, 224, 71, 0.12) 0%, rgba(253, 164, 175, 0.1) 50%, rgba(236, 72, 153, 0.08) 100%);
-        background-size: 400% 400%;
-        animation: dreamyFlow 44s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        mix-blend-mode: color-dodge;
-        opacity: 0.5;
-        z-index: 6;
-      }
-      @keyframes luxuryFlow {
-        0% { background-position: 0% 0%; }
-        16.66% { background-position: 100% 25%; }
-        33.33% { background-position: 75% 100%; }
-        50% { background-position: 0% 75%; }
-        66.66% { background-position: 25% 0%; }
-        83.33% { background-position: 100% 50%; }
-        100% { background-position: 0% 0%; }
-      }
-      @keyframes etherealDrift {
-        0% { transform: translate(0%, 0%) scale(1) rotate(0deg); opacity: 0.6; }
-        25% { transform: translate(-15%, -8%) scale(1.2) rotate(3deg); opacity: 0.8; }
-        50% { transform: translate(8%, -15%) scale(0.85) rotate(-2deg); opacity: 0.5; }
-        75% { transform: translate(12%, 10%) scale(1.1) rotate(4deg); opacity: 0.7; }
-        100% { transform: translate(0%, 0%) scale(1) rotate(0deg); opacity: 0.6; }
-      }
-      @keyframes silkWave {
-        0% { transform: translate(0%, 0%) scale(1); background-position: 0% 0%; }
-        33% { transform: translate(10%, -12%) scale(1.15); background-position: 50% 70%; }
-        66% { transform: translate(-8%, 6%) scale(0.88); background-position: 100% 30%; }
-        100% { transform: translate(0%, 0%) scale(1); background-position: 0% 0%; }
-      }
-      @keyframes gentleBreeze {
-        0% { background-position: 0% 0%; }
-        16.66% { background-position: 30% 25%; }
-        33.33% { background-position: 70% 50%; }
-        50% { background-position: 90% 75%; }
-        66.66% { background-position: 60% 90%; }
-        83.33% { background-position: 20% 65%; }
-        100% { background-position: 0% 0%; }
-      }
-      @keyframes lightWaves {
-        0%, 100% { opacity: 0.08; transform: scale(1) rotate(0deg); }
-        25% { opacity: 0.15; transform: scale(1.03) rotate(1deg); }
-        50% { opacity: 0.05; transform: scale(0.97) rotate(-0.5deg); }
-        75% { opacity: 0.12; transform: scale(1.01) rotate(0.8deg); }
-      }
-      @keyframes dreamyFlow {
-        0% { background-position: 0% 0%; }
-        12.5% { background-position: 20% 30%; }
-        25% { background-position: 50% 60%; }
-        37.5% { background-position: 80% 40%; }
-        50% { background-position: 100% 70%; }
-        62.5% { background-position: 70% 100%; }
-        75% { background-position: 40% 80%; }
-        87.5% { background-position: 10% 50%; }
-        100% { background-position: 0% 0%; }
-      }
-      @media (min-resolution: 2dppx) {
-        .hero-gradient-background { background-size: 800% 800%; }
-        .hero-gradient-layer-1, .hero-gradient-layer-2 { filter: blur(0.3px); }
-      }
-      @media (min-resolution: 3dppx) {
-        .hero-gradient-background { background-size: 1000% 1000%; }
-        .hero-gradient-layer-3 { background-size: 700% 700%; }
-      }
-      @media (min-aspect-ratio: 21/9) {
-        .hero-gradient-background { background-size: 900% 600%; }
-      }
-      @media (max-width: 768px) {
-        .hero-gradient-layer-4, .hero-gradient-layer-5 { display: none; }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .hero-gradient-background,
-        .hero-gradient-layer-1,
-        .hero-gradient-layer-2,
-        .hero-gradient-layer-3,
-        .hero-gradient-layer-4,
-        .hero-gradient-layer-5 {
-          animation-duration: 80s;
-        }
-      }
-    `}</style>
-    <div className="hero-gradient-bg">
-      <div className="hero-gradient-background" />
-      <div className="hero-gradient-layer-1" />
-      <div className="hero-gradient-layer-2" />
-      <div className="hero-gradient-layer-3" />
-      <div className="hero-gradient-layer-4" />
-      <div className="hero-gradient-layer-5" />
-    </div>
-  </>
-);
-
 export default function Home() {
   const featuredProducts = useQuery(api.products.getFeaturedProducts);
   const categories = useQuery(api.categories.getCategories);
@@ -227,56 +85,31 @@ export default function Home() {
       <motion.div className="min-h-screen" variants={pageVariants} initial="initial" animate="animate" exit="exit">
         {/* Hero Section */}
         <section className="relative h-[90vh] sm:h-screen flex items-center justify-center overflow-hidden">
-          <HeroGradientBackground />
+          {/* Cloudinary video background */}
           <video
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+            src="https://res.cloudinary.com/dvfwqwnlf/video/upload/v1758530144/videoplayback_2_z2jsrd.mp4"
             autoPlay
             loop
             muted
             playsInline
-          >
-            <source src="https://res.cloudinary.com/dvfwqwnlf/video/upload/v1758182061/Hailuo_Video_An_ultra_high-resolution_8K_se_424991018201751555_yf3rc1.mp4" type="video/mp4" />
-          </video>
+          />
+          <div className="absolute inset-0 bg-black/40 z-10"></div>
 
-          {/* Overlay Link */}
-          {/* <Link to="/shop" className="absolute inset-0 cursor-pointer z-10" /> */}
-
-          <motion.div
-            className="relative z-30 text-center max-w-4xl mx-auto px-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          >
-            <motion.h1
-              className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 leading-tight"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              <span
-                className="font-playfair bg-gradient-to-r from-amber-600 via-rose-600 to-pink-600 bg-clip-text text-transparent animate-gradient-move"
-                
-              >
+          {/* Overlay content remains unchanged */}
+          <div className="relative z-30 text-center max-w-4xl mx-auto px-4">
+            <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 leading-tight">
+              <span className="font-playfair bg-white bg-clip-text text-transparent">
                 Kyraa Jewelz
               </span>
-            </motion.h1>
-            <motion.p
-              className="text-lg sm:text-2xl md:text-3xl font-thin text-gray-100 mb-4 "
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
+            </h1>
+            <p className="text-lg sm:text-2xl md:text-3xl font-thin text-gray-100 mb-4 ">
               Elegance that Defines You
-            </motion.p>
-            <motion.p
-              className="text-sm sm:text-base md:text-lg text-gray-100 mb-8 max-w-2xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-            >
+            </p>
+            <p className="text-sm sm:text-base md:text-lg text-gray-100 mb-8 max-w-2xl mx-auto">
               Discover our exquisite collection of handcrafted jewelry, where timeless elegance meets contemporary design.
-            </motion.p>
-            <motion.div className="flex flex-col sm:flex-row gap-4 justify-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 1.0 }}>
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/shop"
                 className="bg-gradient-to-r from-amber-500 to-rose-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:from-amber-600 hover:to-rose-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center group"
@@ -290,8 +123,8 @@ export default function Home() {
               >
                 Our Story
               </Link>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </section>
 
         {/* Categories Section */}

@@ -6,7 +6,7 @@ import { SignOutButton } from "../SignOutButton";
 import { ShoppingBag, Heart, User, Menu, X, Search } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { useWishlist } from "../context/WishlistContext";
-import logo from "../img/bglogo.png";
+import logo from "../img/kyraalogo1.png";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);

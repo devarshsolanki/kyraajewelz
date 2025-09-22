@@ -10,7 +10,7 @@ export default function Shop() {
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get("category") || "");
   const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
   const [sortBy, setSortBy] = useState("newest");
-  const [priceRange, setPriceRange] = useState([0, 100000]);
+  const [priceRange, setPriceRange] = useState([0, 10000]);
   const [showFilters, setShowFilters] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
@@ -58,7 +58,7 @@ export default function Shop() {
   const clearFilters = () => {
     setSelectedCategory("");
     setSearchQuery("");
-    setPriceRange([0, 100000]);
+    setPriceRange([0, 10000]);
     setSearchParams({});
   };
 
@@ -152,7 +152,7 @@ export default function Shop() {
                       type="number"
                       placeholder="Max"
                       value={priceRange[1]}
-                      onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 100000])}
+                      onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 0])}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent"
                     />
                   </div>
