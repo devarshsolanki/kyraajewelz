@@ -3,10 +3,13 @@ import { useAuthActions } from "@convex-dev/auth/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import { useMutation } from "convex/react";
+import { api } from "../convex/_generated/api";
 
 export function SignInForm() {
   const { signIn } = useAuthActions();
   const navigate = useNavigate();
+  const completeSignUpProfile = useMutation(api.auth.completeSignUpProfile);
   const [flow, setFlow] = useState<"signIn" | "signUp">("signIn");
   const [submitting, setSubmitting] = useState(false);
   const [passwordError, setPasswordError] = useState<string | null>(null);
@@ -78,12 +81,27 @@ export function SignInForm() {
             }
 
             try {
-              await signIn("password", formData);
+              console.log("Attempting signIn with flow:", flow, "with formData:", Object.fromEntries(formData.entries()));
+              const signInResult = await signIn("password", formData);
+              console.log("signIn successful for flow:", flow, "Result:", signInResult);
+              if (flow === "signUp") {
+                const fullName = formData.get("name") as string;
+                const phoneNumber = formData.get("phone") as string;
+                console.log("Calling completeSignUpProfile with:", { fullName, phoneNumber });
+                // Adding a delay to allow Convex authentication state to propagate
+                await new Promise(resolve => setTimeout(resolve, 500));
+                await completeSignUpProfile({ fullName, phoneNumber });
+                console.log("completeSignUpProfile successful.");
+              }
               navigate("/");
             } catch (error: any) {
+              console.error("signIn or completeSignUpProfile failed:", error);
               if (error.message && error.message.includes("Invalid password")) {
                 setPasswordError("Invalid password. Please try again.");
-              } else {
+              } else if (error.message && error.message.includes("Account already exists")) {
+                setPasswordError("An account with this email already exists. Please sign in or use a different email.");
+              }
+              else {
                 setPasswordError(
                   flow === "signIn"
                     ? "Could not sign in, did you mean to sign up?"
@@ -218,7 +236,7 @@ export function SignInForm() {
           }}
         >
           Continue as Guest
-</button>
+        </button>
       </div>
     </div>
   );

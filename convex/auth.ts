@@ -4,9 +4,11 @@ import { Anonymous } from "@convex-dev/auth/providers/Anonymous";
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 
+console.log("Initializing convexAuth...");
 export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
   providers: [Password, Anonymous],
 });
+console.log("convexAuth initialized.");
 
 
 export const loggedInUser = query({
@@ -85,5 +87,33 @@ export const changePassword = mutation({
     // Securely change the password using the Password provider.
     // This method handles verification of the old password and updates to the new one.
     // await auth.providers.Password.changePassword(ctx, userId, args.oldPassword, args.newPassword);
+  },
+});
+
+export const completeSignUpProfile = mutation({
+  args: {
+    fullName: v.string(),
+    phoneNumber: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      console.error("completeSignUpProfile: Not authenticated.");
+      throw new Error("Not authenticated");
+    }
+
+    console.log("completeSignUpProfile: User ID:", userId, "Args:", args);
+
+    const updates: any = {};
+    if (args.fullName !== undefined) updates.name = args.fullName;
+    if (args.phoneNumber !== undefined) updates.phone = args.phoneNumber;
+
+    try {
+      await ctx.db.patch(userId, updates);
+      console.log("completeSignUpProfile: Profile patched successfully for user:", userId, "with updates:", updates);
+    } catch (err) {
+      console.error("completeSignUpProfile: Profile completion failed for user:", userId, "Error:", err);
+      throw new Error("Profile completion failed.");
+    }
   },
 });
