@@ -2,7 +2,6 @@ import React from "react";
 import { Authenticated, Unauthenticated, useQuery, useConvexAuth } from "convex/react";
 import { api } from "../convex/_generated/api";
 import { SignInForm } from "./SignInForm";
-import { BrowserRouter } from "react-router-dom";
 import { SignOutButton } from "./SignOutButton";
 import { Toaster } from "sonner";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";

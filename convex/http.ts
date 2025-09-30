@@ -1,7 +1,7 @@
 import { auth } from "./auth";
-import router from "./router";
+import Router from "./router";
 
-const http = router;
+const http = Router;
 
 auth.addHttpRoutes(http);
 

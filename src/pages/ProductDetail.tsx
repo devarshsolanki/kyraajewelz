@@ -1,14 +1,10 @@
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import {
   Heart,
-  ShoppingBag,
   Star,
-  Truck,
-  Shield,
-  RotateCcw,
   ChevronLeft,
   ChevronRight,
   Minus,
@@ -16,26 +12,42 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import ProductCard from "../components/ProductCard";
+import { Id } from "../../convex/_generated/dataModel";
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
+  const productId = id! as Id<"products">;
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
 
-  const product = useQuery(api.products.getProduct, { id: id! as any });
+  const product = useQuery(api.products.getProduct, { id: productId });
   const relatedProducts = useQuery(api.products.getProducts, {
     categoryId: product?.categoryId,
     limit: 4,
   });
   const isInWishlist = useQuery(api.wishlist.isInWishlist, {
-    productId: id! as any,
+    productId: productId,
   });
   const loggedInUser = useQuery(api.auth.loggedInUser);
+
+  const { averageRating, reviewCount } =
+    useQuery(api.reviews.getAverageRating, { productId: productId }) || {
+      averageRating: 0,
+      reviewCount: 0,
+    };
+  const reviews = useQuery(api.reviews.getReviewsForProduct, {
+    productId: productId,
+  });
+  const canReview = useQuery(api.reviews.canUserReviewProduct, {
+    productId: productId,
+  });
 
   const addToCart = useMutation(api.cart.addToCart);
   const addToWishlist = useMutation(api.wishlist.addToWishlist);
   const removeFromWishlist = useMutation(api.wishlist.removeFromWishlist);
+  const createReview = useMutation(api.reviews.createReview);
 
   if (!product) {
     return (
@@ -56,7 +68,8 @@ export default function ProductDetail() {
     try {
       await addToCart({ productId: product._id, quantity });
       toast.success("Added to cart!");
-    } catch {
+    } catch (error) {
+      console.error("Failed to add to cart:", error);
       toast.error("Failed to add to cart");
     }
   };
@@ -74,7 +87,8 @@ export default function ProductDetail() {
         await addToWishlist({ productId: product._id });
         toast.success("Added to wishlist!");
       }
-    } catch {
+    } catch (error) {
+      console.error("Failed to update wishlist:", error);
       toast.error("Failed to update wishlist");
     }
   };
@@ -93,6 +107,27 @@ export default function ProductDetail() {
         ((product.originalPrice - product.price) / product.originalPrice) * 100
       )
     : 0;
+
+  const handleReviewSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!loggedInUser) {
+      toast.error("Please sign in to submit a review.");
+      return;
+    }
+    if (rating === 0) {
+      toast.error("Please provide a rating.");
+      return;
+    }
+    try {
+      await createReview({ productId: productId, rating, comment });
+      toast.success("Review submitted successfully!");
+      setRating(0);
+      setComment("");
+    } catch (error: any) {
+      console.error("Failed to submit review:", error);
+      toast.error(error.message || "Failed to submit review.");
+    }
+  };
 
   return (
     <>
@@ -157,9 +192,28 @@ export default function ProductDetail() {
 
             {/* ---------- RIGHT: INFO ---------- */}
             <div className="space-y-6">
-              <h1 className="text-3xl font-bold text-gray-900 mb-4">
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
                 {product.name}
               </h1>
+              {/* Average Rating */}
+              <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <Star
+                      key={star}
+                      className={`w-5 h-5 ${
+                        star <= averageRating
+                          ? "text-amber-400 fill-amber-400"
+                          : "text-gray-300"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <span className="text-gray-600">
+                  ({reviewCount} {reviewCount === 1 ? "review" : "reviews"})
+                </span>
+              </div>
+
               {/* Price */}
               <div className="flex items-center gap-4 mb-6">
                 <span className="text-3xl font-bold text-gray-900">
@@ -225,9 +279,11 @@ export default function ProductDetail() {
             </div>
           </div>
 
+         
+
           {/* Related Products */}
           {relatedProducts && relatedProducts.length > 0 && (
-            <div>
+            <div className="mt-16">
               <h2 className="text-2xl font-bold text-gray-900 mb-8">
                 You May Also Like
               </h2>
@@ -244,6 +300,102 @@ export default function ProductDetail() {
               </div>
             </div>
           )}
+
+           {/* Reviews Section */}
+          <div className="mt-16">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              Customer Reviews ({reviewCount})
+            </h2>
+
+            {/* Review Submission Form */}
+            {loggedInUser && canReview && (
+              <div className="bg-white p-6 rounded-2xl shadow-lg mb-8">
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                  Write a Review
+                </h3>
+                <form onSubmit={handleReviewSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-gray-700 text-sm font-medium mb-2">
+                      Your Rating
+                    </label>
+                    <div className="flex items-center gap-1">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star
+                          key={star}
+                          className={`w-6 h-6 cursor-pointer ${
+                            star <= rating
+                              ? "text-amber-400 fill-amber-400"
+                              : "text-gray-300"
+                          }`}
+                          onClick={() => setRating(star)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="comment"
+                      className="block text-gray-700 text-sm font-medium mb-2"
+                    >
+                      Your Comment
+                    </label>
+                    <textarea
+                      id="comment"
+                      className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-700 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
+                      rows={4}
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      required
+                    ></textarea>
+                  </div>
+                  <button
+                    type="submit"
+                    className="bg-gradient-to-r from-amber-500 to-rose-500 text-white px-6 py-3 rounded-full font-semibold hover:from-amber-600 hover:to-rose-600 transition"
+                  >
+                    Submit Review
+                  </button>
+                </form>
+              </div>
+            )}
+
+            {/* Display Reviews */}
+            {reviews && reviews.length > 0 ? (
+              <div className="space-y-6">
+                {reviews.map((review) => (
+                  <div
+                    key={review._id.toString()}
+                    className="bg-white p-6 rounded-2xl shadow-lg"
+                  >
+                    <div className="flex items-center mb-2">
+                      <div className="flex items-center">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <Star
+                            key={star}
+                            className={`w-4 h-4 ${
+                              star <= review.rating
+                                ? "text-amber-400 fill-amber-400"
+                                : "text-gray-300"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <span className="ml-3 text-gray-800 font-semibold">
+                        {review.userName}
+                      </span>
+                      <span className="ml-2 text-gray-500 text-sm">
+                        {new Date(review._creationTime).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <p className="text-gray-700 leading-relaxed">
+                      {review.comment}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-600">No reviews yet. Be the first!</p>
+            )}
+          </div>
         </div>
       </div>
     </>

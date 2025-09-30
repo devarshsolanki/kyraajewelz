@@ -19,6 +19,7 @@ import type * as categories from "../categories.js";
 import type * as http from "../http.js";
 import type * as orders from "../orders.js";
 import type * as products from "../products.js";
+import type * as reviews from "../reviews.js";
 import type * as router from "../router.js";
 import type * as storage from "../storage.js";
 import type * as wishlist from "../wishlist.js";
@@ -38,6 +39,7 @@ declare const fullApi: ApiFromModules<{
   http: typeof http;
   orders: typeof orders;
   products: typeof products;
+  reviews: typeof reviews;
   router: typeof router;
   storage: typeof storage;
   wishlist: typeof wishlist;
